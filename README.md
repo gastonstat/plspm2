@@ -6,7 +6,7 @@ GR (and LT): Ecco il prototipo del pacchetto (sotto il nome `plspm2`)!
 ## Installation
 
 **Passo 1)** In order to install `plspm2` you need to use the R package devtools. Run in your R console:
-```r
+```
 # install "devtools"
 install.packages("devtools") 
 library(devtools)
@@ -14,14 +14,14 @@ library(devtools)
 
 **Passo 2)** Then you need to install the package `turner`.
 Run in your R console:
-```r
+```
 # install "turner"
 install_github('turner', username='gastonstat')
 ```
 
 **Passo 3)** And finally, you install `plspm2`. 
 Run in your R console:
-```r
+```
 # install "plspm2""
 install_github('plspm2', username='gastonstat')
 
@@ -32,7 +32,7 @@ library(plspm2)
 
 ## Model for Russett data (original data set)
 Let's prepare the ingredients:
-```r
+```
 # load dataset russett 
 # (variable 'demo' as numeric)
 data(russa)
@@ -54,7 +54,7 @@ rus_modes = c("A", "A", "A")
 
 ## Example 1
 PLS-PM using data set 'russa' and scaling all 'NUM'
-```r
+```
 # PLS-PM using data set 'russa'
 rus_pls1 = plspm(russa, rus_path, rus_blocks, rus_scaling, rus_modes, 
                  scheme = "centroid", plscomp=c(1,1,1), tol = 0.0000001)
@@ -77,7 +77,7 @@ plot(rus_pls1)
 
 ## Example 2
 PLS-PM using data set 'russa', and different scaling
-```r
+```
 # new scaling
 rus_scaling2 = list(c("NUM", "NUM", "NUM"),
                    c("ORD", "ORD"),
@@ -93,7 +93,7 @@ rus_pls2$outer_model
 
 ## Example 3
 Now let's use data set 'russb' (it contains a factor!)
-```r
+```
 # take a peek
 head(russb)
 
@@ -107,7 +107,7 @@ rus_pls3$outer_model
 
 ## Example 4
 Now let's change modes
-```r
+```
 # modes new A
 rus_modes2 = c("newA", "newA", "newA")
 
@@ -122,6 +122,7 @@ rus_pls4$outer_model
 ## Example 5
 Let's make things more interesting, flexible and versatile. How?
 What if you could have more freedom specifying the arguments? Now you can!
+Note that you can specify `blocks` using variables' names, the `scaling` types are NOT case senstive, neither are `modes` nor `scheme`. Isn't that cool?
 ```
 # blocks
 rus_blocchi = list(
@@ -135,11 +136,11 @@ rus_scaling3 = list(c("numeric", "numeric", "numeric"),
                c("NuM", "numer", "NUM", "nominal"))
     
 # modes new A
-rus_modes3 = c("newA", "NEWA", "NewA")
+rus_modes3 = c("newa", "NEWA", "NewA")
 
 # PLS-PM using data set 'russb'
 rus_pls5 = plspm(russb, rus_path, rus_blocchi, rus_scaling3, rus_modes3, 
-                 scheme = "centroid", plscomp=c(1,1,1), tol = 0.0000001)
+                 scheme = "CENTROID", plscomp=c(1,1,1), tol = 0.0000001)
 
 # outer model
 rus_pls5$outer_model
