@@ -19,7 +19,7 @@ Run in your R console:
 install_github('turner', username='gastonstat')
 ```
 
-**Passo 3)** And finally, you install `plspm2`
+**Passo 3)** And finally, you install `plspm2`. 
 Run in your R console:
 ```r
 # install "plspm2""
@@ -106,9 +106,23 @@ rus_pls3$outer_model
 ```
 
 ## Example 4
+Now let's change modes
+```r
+# modes new A
+rus_modes2 = c("newA", "newA", "newA")
+
+# PLS-PM using data set 'russa'
+rus_pls4 = plspm(russa, rus_path, rus_blocks, rus_scaling2, rus_modes2, 
+                 scheme = "centroid", plscomp=c(1,1,1), tol = 0.0000001)
+
+# outer model
+rus_pls4$outer_model
+```
+
+## Example 5
 Let's make things more interesting, flexible and versatile. How?
 What if you could have more freedom specifying the arguments? Now you can!
-```r
+```
 # blocks
 rus_blocchi = list(
    c("gini", "farm", "rent"),
@@ -119,13 +133,16 @@ rus_blocchi = list(
 rus_scaling3 = list(c("numeric", "numeric", "numeric"),
                c("ordinal", "ORDINAL"),
                c("NuM", "numer", "NUM", "nominal"))
-               
+    
+# modes new A
+rus_modes3 = c("newA", "NEWA", "NewA")
+
 # PLS-PM using data set 'russb'
-rus_pls4 = plspm(russb, rus_path, rus_blocchi, rus_scaling3, rus_modes, 
+rus_pls5 = plspm(russb, rus_path, rus_blocchi, rus_scaling3, rus_modes3, 
                  scheme = "centroid", plscomp=c(1,1,1), tol = 0.0000001)
 
 # outer model
-rus_pls4$outer_model
+rus_pls5$outer_model
 ```
 
 
