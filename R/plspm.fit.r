@@ -1,17 +1,20 @@
-#' @title PLS-PM: Partial Least Squares Path Modeling
-#'
+#' @title Basic results for Partial Least Squares Path Modeling
+#' 
 #' @description
 #' Estimate path models with latent variables by partial least squares approach
-#'
+#' without providing the full list of results as \code{plspm}. This might be 
+#' helpful when doing simulations, intensive computations, or when you don't want
+#' the whole enchilada.
+#' 
 #' @details
-#' The function \code{plspm} estimates a path model by partial least squares
-#' approach providing the full set of results. \cr
-#'
+#' \code{plspm.fit} performs the basic PLS algorithm and provides limited
+#' results (e.g. outer model, inner model, scores, path coefficients R2). \cr
+#' 
 #' The argument \code{path_matrix} is a matrix of zeros and ones that indicates
 #' the structural relationships between latent variables. \code{path_matrix} 
 #' must be a lower triangular matrix; it contains a 1 when column \code{j}
 #' affects row \code{i}, 0 otherwise. \cr
-#'
+#' 
 #' @param Data matrix or data frame containing the manifest variables.
 #' @param path_matrix A square (lower triangular) boolean matrix representing 
 #' the inner model (i.e. the path relationships betwenn latent variables).
@@ -38,13 +41,6 @@
 #' @param plscomp optional vector indicating the number of PLS components
 #' (for each block) to be used when handling non-metric data 
 #' (only used if \code{scaling} is provided)
-#' @param boot.val logical value indicating whether bootstrap validation is
-#' performed (\code{FALSE} by default). 
-#' @param br integer indicating the number bootstrap resamples. Used only
-#' when \code{boot.val=TRUE}. When \code{boot.val=TRUE}, the default number of 
-#' re-samples is 100, but it can be specified in a range from 100 to 1000.
-#' @param dataset logical value indicating whether the data matrix should be
-#' retrieved (\code{TRUE} by default).
 #' @return An object of class \code{"plspm"}. 
 #' @return \item{outer_model}{Results of the outer model. Includes:
 #' outer weights, standardized loadings, communalities, and redundancies}
@@ -56,45 +52,61 @@
 #' then \code{scores} and \code{latents} have the same values}
 #' @return \item{path_coefs}{Matrix of path coefficients 
 #' (this matrix has a similar form as \code{path_matrix})}
-#' @return \item{crossloadings}{Correlations between the latent variables 
-#' and the manifest variables (also called crossloadings)}
-#' @return \item{inner_summary}{Summarized results of the inner model. 
-#' Includes: type of LV, type of measurement, number of indicators, R-squared,
-#' average communality, average redundancy, and average variance
-#' extracted}
-#' @return \item{effects}{Path effects of the structural relationships. 
-#' Includes: direct, indirect, and total effects}
-#' @return \item{unidim}{Results for checking the unidimensionality of blocks
-#' (These results are only meaningful for reflective blocks)}
-#' @return \item{gof}{Goodness-of-Fit index}
-#' @return \item{data}{Data matrix containing the manifest variables used in the
-#' model. Only when \code{dataset=TRUE}}
-#' @return \item{boot}{List of bootstrapping results; only available 
-#' when argument \code{boot.val=TRUE}}
-#' @author Gaston Sanchez, Giorgio Russolilo
+#' @author Gaston Sanchez, Giorgio Russolillo
 #'
 #' @references Tenenhaus M., Esposito Vinzi V., Chatelin Y.M., and Lauro C.
 #' (2005) PLS path modeling. \emph{Computational Statistics & Data Analysis},
 #' \bold{48}, pp. 159-205.
-#'
+#' 
 #' Lohmoller J.-B. (1989) \emph{Latent variables path modelin with partial
 #' least squares.} Heidelberg: Physica-Verlag.
-#'
+#' 
 #' Wold H. (1985) Partial Least Squares. In: Kotz, S., Johnson, N.L. (Eds.),
 #' \emph{Encyclopedia of Statistical Sciences}, Vol. 6. Wiley, New York, pp.
 #' 581-591.
-#'
+#' 
 #' Wold H. (1982) Soft modeling: the basic design and some extensions. In: K.G.
 #' Joreskog & H. Wold (Eds.), \emph{Systems under indirect observations:
 #' Causality, structure, prediction}, Part 2, pp. 1-54. Amsterdam: Holland.
-#' @seealso \code{\link{innerplot}}, \code{\link{plot.plspm}}
-#' @example R/satis-plspm-ex.r
 #' @export
-plspm <-
+#' @examples
+#'
+#'  \dontrun{
+#'  ## typical example of PLS-PM in customer satisfaction analysis
+#'  ## model with six LVs and reflective indicators
+#'
+#'  # load dataset satisfaction
+#'  data(satisfaction)
+#'
+#'  # inner model matrix
+#'  IMAG = c(0,0,0,0,0,0)
+#'  EXPE = c(1,0,0,0,0,0)
+#'  QUAL = c(0,1,0,0,0,0)
+#'  VAL = c(0,1,1,0,0,0)
+#'  SAT = c(1,1,1,1,0,0) 
+#'  LOY = c(1,0,0,0,1,0)
+#'  sat_inner = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
+#'
+#'  # outer model list
+#'  sat_outer = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
+#'
+#'  # vector of reflective modes
+#'  sat_mod = rep("A", 6)
+#'
+#'  # apply plspm.fit
+#'  satpls = plspm.fit(satisfaction, sat_inner, sat_outer, sat_mod, scaled=FALSE)
+#'  
+#'  # summary of results
+#'  summary(satpls)
+#'
+#'  # default plot (inner model)
+#'  plot(satpls)
+#'  }
+#'
+plspm.fit <-
 function(Data, path_matrix, blocks, scaling = NULL, modes = NULL, 
-         scheme = "centroid", scaled = TRUE, tol = 0.000001, maxiter = 100, 
-         plscomp = NULL, boot.val = FALSE, br = NULL, 
-         dataset = TRUE)
+         scheme = "centroid", scaled = TRUE, tol = 0.000001,
+         maxiter = 100, plscomp = NULL)
 {
   # =======================================================================
   # checking arguments
@@ -102,17 +114,14 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
   valid = check_args(Data=Data, path_matrix=path_matrix, blocks=blocks, 
                      scaling=scaling, modes=modes, scheme=scheme, 
                      scaled=scaled, tol=tol, maxiter=maxiter, 
-                     plscomp=plscomp, boot.val=boot.val, br=br, 
-                     dataset=dataset)
+                     plscomp=plscomp, boot.val=FALSE, br=NULL, 
+                     dataset=FALSE)
   
   Data = valid$Data
   path_matrix = valid$path_matrix
   blocks = valid$blocks
   specs = valid$specs
-  boot.val = valid$boot.val
-  br = valid$br
-  dataset = valid$dataset
-  
+    
   # =======================================================================
   # Preparing data and blocks indexification
   # =======================================================================
@@ -157,24 +166,21 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
   # =======================================================================
   # Path coefficients and total effects
   # =======================================================================
-  inner_results = get_paths(path_matrix, LV)
+  inner_results = get_paths(path_matrix, LV, FALSE)
   inner_model = inner_results[[1]]
   Path = inner_results[[2]]
   R2 = inner_results[[3]]
   Path_effects = get_effects(Path)
-
+  
   # =======================================================================
   # Outer model: loadings, communalities, redundancy, crossloadings
   # =======================================================================
-#  xloads = cor(MV, LV)
+  #  xloads = cor(MV, LV)
   xloads = cor(X, LV)
   loadings = rowSums(xloads * weights$ODM)
   communality = loadings^2
   R2_aux = rowSums(weights$ODM %*% diag(R2, gens$lvs, gens$lvs))
   redundancy = communality * R2_aux
-  crossloadings = data.frame(xloads)
-  crossloadings$block = rep(gens$lvs_names, block_sizes)
-  crossloadings = crossloadings[,c('block',colnames(xloads))]
   
   # outer model data frame
   outer_model = data.frame(block = rep(gens$lvs_names, block_sizes),
@@ -184,76 +190,20 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
                            redundancy = redundancy,
                            row.names = gens$mvs_names)
   
-  # Unidimensionality
-  unidim = get_unidim(DM = MV, blocks = blocks, modes = modes)
-  
-  # Summary Inner model
-  inner_summary = get_inner_summary(path_matrix, blocks, modes,
-                                    communality, redundancy, R2)
-  
-  # GoF Index
-  gof = get_gof(communality, R2, blocks, path_matrix)
-  
   # =======================================================================
   # Results
   # =======================================================================
-  # deliver dataset?
-  if (dataset) data = MV else data = NULL
-  # deliver bootstrap validation results? 
-  bootstrap = FALSE
-  if (boot.val) 
-  {
-    if (nrow(X) <= 10) {
-      warning("Bootstrapping stopped: very few cases.") 
-    } else { 
-      bootstrap = get_boots(MV, path_matrix, blocks, specs, br)
-    }
-  }
-  
   # list with model specifications
-  model = list(IDM=path_matrix, blocks=blocks, specs=specs,
-               iter=weights$iter, boot.val=boot.val, br=br, gens=gens)
-  
+  model = list(IDM=path_matrix, blocks=blocks, specs=specs, 
+               iter=weights$iter, gens=gens)
+
   ## output
   res = list(outer_model = outer_model, 
              inner_model = inner_model,
              path_coefs = Path, 
              scores = LV,
-             crossloadings = crossloadings, 
-             inner_summary = inner_summary, 
-             effects = Path_effects,
-             unidim = unidim, 
-             gof = gof, 
-             boot = bootstrap, 
-             data = data, 
+             data = NULL, 
              model = model)
-  class(res) = "plspm"
+  class(res) = c("plspm.fit", "plspm")
   return(res)
-}
-
-
-#'@S3method print plspm
-print.plspm <- function(x, ...)
-{
-  cat("Partial Least Squares Path Modeling (PLS-PM)", "\n")
-  cat(rep("-", 45), sep="")
-  cat("\n   NAME            ", "DESCRIPTION")  
-  cat("\n1  $outer_model    ", "outer model")
-  cat("\n2  $inner_model    ", "inner model")
-  cat("\n3  $path_coefs     ", "path coefficients matrix")
-  cat("\n4  $scores         ", "latent variable scores")
-  if (!inherits(x, "plspm.fit"))
-  {
-    cat("\n5  $crossloadings  ", "cross-loadings")
-    cat("\n6  $inner_summary  ", "summary inner model")
-    cat("\n7  $effects        ", "total effects")
-    cat("\n8  $unidim         ", "unidimensionality")
-    cat("\n9  $gof            ", "goodness-of-fit")
-    cat("\n10 $boot           ", "bootstrap results")
-    cat("\n11 $data           ", "data matrix")
-  }
-  cat("\n")
-  cat(rep("-", 45), sep="")
-  cat("\nYou can also use the function 'summary'", "\n\n")    
-  invisible(x)
 }

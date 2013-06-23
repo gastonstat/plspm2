@@ -2,7 +2,7 @@
 \alias{get_boots}
 \title{Performs bootstrap validation in \code{plspm}}
 \usage{
-  get_boots(DM, path_matrix, blocks, specs, br, plsr)
+  get_boots(DM, path_matrix, blocks, specs, br)
 }
 \arguments{
   \item{DM}{Data Matrix}
@@ -14,9 +14,6 @@
   \item{specs}{list with algorithm specifications}
 
   \item{br}{number of bootstrap resamples}
-
-  \item{plsr}{logical to get path coefficients by pls
-  regression}
 }
 \description{
   Internal function not to be called by the user

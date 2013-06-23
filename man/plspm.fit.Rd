@@ -1,11 +1,10 @@
-\name{plspm}
-\alias{plspm}
-\title{PLS-PM: Partial Least Squares Path Modeling}
+\name{plspm.fit}
+\alias{plspm.fit}
+\title{Basic results for Partial Least Squares Path Modeling}
 \usage{
-  plspm(Data, path_matrix, blocks, scaling = NULL,
+  plspm.fit(Data, path_matrix, blocks, scaling = NULL,
     modes = NULL, scheme = "centroid", scaled = TRUE,
-    tol = 1e-06, maxiter = 100, plscomp = NULL,
-    boot.val = FALSE, br = NULL, dataset = TRUE)
+    tol = 1e-06, maxiter = 100, plscomp = NULL)
 }
 \arguments{
   \item{Data}{matrix or data frame containing the manifest
@@ -54,19 +53,6 @@
   PLS components (for each block) to be used when handling
   non-metric data (only used if \code{scaling} is
   provided)}
-
-  \item{boot.val}{logical value indicating whether
-  bootstrap validation is performed (\code{FALSE} by
-  default).}
-
-  \item{br}{integer indicating the number bootstrap
-  resamples. Used only when \code{boot.val=TRUE}. When
-  \code{boot.val=TRUE}, the default number of re-samples is
-  100, but it can be specified in a range from 100 to
-  1000.}
-
-  \item{dataset}{logical value indicating whether the data
-  matrix should be retrieved (\code{TRUE} by default).}
 }
 \value{
   An object of class \code{"plspm"}.
@@ -88,40 +74,18 @@
 
   \item{path_coefs}{Matrix of path coefficients (this
   matrix has a similar form as \code{path_matrix})}
-
-  \item{crossloadings}{Correlations between the latent
-  variables and the manifest variables (also called
-  crossloadings)}
-
-  \item{inner_summary}{Summarized results of the inner
-  model. Includes: type of LV, type of measurement, number
-  of indicators, R-squared, average communality, average
-  redundancy, and average variance extracted}
-
-  \item{effects}{Path effects of the structural
-  relationships. Includes: direct, indirect, and total
-  effects}
-
-  \item{unidim}{Results for checking the unidimensionality
-  of blocks (These results are only meaningful for
-  reflective blocks)}
-
-  \item{gof}{Goodness-of-Fit index}
-
-  \item{data}{Data matrix containing the manifest variables
-  used in the model. Only when \code{dataset=TRUE}}
-
-  \item{boot}{List of bootstrapping results; only available
-  when argument \code{boot.val=TRUE}}
 }
 \description{
   Estimate path models with latent variables by partial
-  least squares approach
+  least squares approach without providing the full list of
+  results as \code{plspm}. This might be helpful when doing
+  simulations, intensive computations, or when you don't
+  want the whole enchilada.
 }
 \details{
-  The function \code{plspm} estimates a path model by
-  partial least squares approach providing the full set of
-  results. \cr
+  \code{plspm.fit} performs the basic PLS algorithm and
+  provides limited results (e.g. outer model, inner model,
+  scores, path coefficients R2). \cr
 
   The argument \code{path_matrix} is a matrix of zeros and
   ones that indicates the structural relationships between
@@ -130,45 +94,40 @@
   affects row \code{i}, 0 otherwise. \cr
 }
 \examples{
-## typical example of PLS-PM in customer satisfaction analysis
-## model with six LVs and reflective indicators
+\dontrun{
+ ## typical example of PLS-PM in customer satisfaction analysis
+ ## model with six LVs and reflective indicators
 
-# load dataset satisfaction
-data(satisfaction, package="plspm2")
+ # load dataset satisfaction
+ data(satisfaction)
 
-# path matrix
-IMAG = c(0,0,0,0,0,0)
-EXPE = c(1,0,0,0,0,0)
-QUAL = c(0,1,0,0,0,0)
-VAL = c(0,1,1,0,0,0)
-SAT = c(1,1,1,1,0,0) 
-LOY = c(1,0,0,0,1,0)
-sat_path = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
+ # inner model matrix
+ IMAG = c(0,0,0,0,0,0)
+ EXPE = c(1,0,0,0,0,0)
+ QUAL = c(0,1,0,0,0,0)
+ VAL = c(0,1,1,0,0,0)
+ SAT = c(1,1,1,1,0,0)
+ LOY = c(1,0,0,0,1,0)
+ sat_inner = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
 
-# plot diagram of path matrix
-innerplot(sat_path)
+ # outer model list
+ sat_outer = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
 
-# blocks of outer model
-sat_blocks = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
+ # vector of reflective modes
+ sat_mod = rep("A", 6)
 
-# vector of modes (reflective indicators)
-sat_mod = rep("A", 6)
+ # apply plspm.fit
+ satpls = plspm.fit(satisfaction, sat_inner, sat_outer, sat_mod, scaled=FALSE)
 
-# apply plspm
-satpls = plspm(satisfaction, sat_path, sat_blocks, modes = sat_mod, 
-    scaled = FALSE)
+ # summary of results
+ summary(satpls)
 
-# plot diagram of the inner model
-innerplot(satpls)
-
-# plot loadings
-outerplot(satpls, what="loadings")
-
-# plot outer weights
-outerplot(satpls, what="weights")
+ # default plot (inner model)
+ plot(satpls)
+ }
 }
 \author{
-  Gaston Sanchez, Giorgio Russolilo
+  Gaston Sanchez, Giorgio Russolillo
 }
 \references{
   Tenenhaus M., Esposito Vinzi V., Chatelin Y.M., and Lauro
@@ -188,8 +147,5 @@ outerplot(satpls, what="weights")
   \emph{Systems under indirect observations: Causality,
   structure, prediction}, Part 2, pp. 1-54. Amsterdam:
   Holland.
-}
-\seealso{
-  \code{\link{innerplot}}, \code{\link{plot.plspm}}
 }
 

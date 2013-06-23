@@ -2,11 +2,11 @@
 summary.plspm <- function(object, ...)
 {
   ## Reminder of model in objects "plspm"
-  # x$model <- list(IDM, blocks, scheme, modes, scaled, boot.val, 
-  #                 plsr, obs, br, tol, iter, n.iter, outer)
+  # y$model = list(IDM=path_matrix, blocks=blocks, specs=specs, 
+  #                iter=weights$iter, boot.val=boot.val, br=br, gens=gens)
   ## Reminder of model in objects "plspm.fit"
-  # x.fit$model <- list(IDM, blocks, scheme, modes, scaled, 
-  #                     obs, tol, iter, n.iter, outer)
+  # y.fit$model = list(IDM=path_matrix, blocks=blocks, specs=specs, 
+  #                    iter=weights$iter, gens=gens)
   
   # =======================================================
   # inputs setting
@@ -19,13 +19,13 @@ summary.plspm <- function(object, ...)
   inputs = data.frame(Block = rownames(IDM), 
                       Type = exo_endo, 
                       Size = lengths(y$model$blocks), 
-                      Mode = y$model$modes,
+                      Mode = y$model$specs$modes,
                       row.names = 1:length(exo_endo))
   
   # =======================================================
   # results
   # =======================================================  
-  if (length(y$model) == 10) 
+  if (length(y$model) == 5) 
   {
     # results for object "plspm.fit"
     res = list(inputs = inputs, 
@@ -65,25 +65,24 @@ print.summary.plspm <- function(x, ...)
   # =======================================================
   # inputs setting
   # =======================================================  
-  if (x$model$scaled) Scale="Standardized Data" else Scale="Raw Data"
+  if (x$model$specs$scaled) Scale="Standardized Data" else Scale="Raw Data"
   
   cat("PARTIAL LEAST SQUARES PATH MODELING (PLS-PM)", "\n\n")
   cat("----------------------------------------------------------", "\n")    
   cat("MODEL SPECIFICATION", "\n")
   cat("1   Number of Cases     ", x$model$gens$obs, "\n")
   cat("2   Latent Variables    ", nrow(x$model$IDM), "\n")
-  cat("3   Manifest Variables  ", sumlist(x$model$blocks), "\n")
+  cat("3   Manifest Variables  ", x$model$gens$mvs, "\n")
   cat("4   Scale of Data       ", Scale, "\n")
-  cat("5   Weighting Scheme    ", x$model$scheme, "\n")
-  cat("6   Tolerance Crit      ", x$model$tol, "\n")
-  cat("7   Max Num Iters       ", x$model$maxiter, "\n")
+  cat("5   Weighting Scheme    ", x$model$specs$scheme, "\n")
+  cat("6   Tolerance Crit      ", x$model$specs$tol, "\n")
+  cat("7   Max Num Iters       ", x$model$specs$maxiter, "\n")
   cat("8   Convergence Iters   ", x$model$iter, "\n")
-  if (length(x$model) > 10)
+  if (length(x$model) > 5)
   {
     boot_sam <- if(is.null(x$model$br)) "NULL" else x$model$br
-    cat("9   Paths by PLS-R      ", x$model$plsr, "\n")
-    cat("10  Bootstrapping       ", x$model$boot.val, "\n")
-    cat("11  Bootstrap samples   ", boot_sam, "\n")
+    cat("9   Bootstrapping       ", x$model$boot.val, "\n")
+    cat("10  Bootstrap samples   ", boot_sam, "\n")
   }
   cat("\n")
   cat("----------------------------------------------------------", "\n")    
@@ -91,7 +90,7 @@ print.summary.plspm <- function(x, ...)
   print(x$inputs, print.gap = 3)
   cat("\n")
   cat("----------------------------------------------------------", "\n") 
-  if (length(x$model)>10) 
+  if (length(x$model)>5) 
   {   
     cat("BLOCKS UNIDIMENSIONALITY","\n")
     print(x$unidim, print.gap = 2, digits = 3)
@@ -102,7 +101,7 @@ print.summary.plspm <- function(x, ...)
   print(x$outer_model, print.gap = 2, digits = 3)
   cat("\n")
   cat("----------------------------------------------------------", "\n")    
-  if (length(x$model) > 10)
+  if (length(x$model) > 5)
   {
     cat("CROSSLOADINGS","\n")
     print(x$crossloadings, print.gap = 2, digits = 3)
@@ -111,7 +110,7 @@ print.summary.plspm <- function(x, ...)
   }
   cat("INNER MODEL","\n")
   print(x$inner_model, print.gap = 3, digits = 3)
-  if (length(x$model) > 10)
+  if (length(x$model) > 5)
   {
     cat("----------------------------------------------------------", "\n")    
     cat("CORRELATIONS BETWEEN LVs","\n")

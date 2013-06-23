@@ -45,7 +45,7 @@ function(x, what="loadings", colpos = "#6890c4BB", colneg = "#f9675dBB",
   # get ingredients
   IDM = x$model$IDM
   blocks = x$model$blocks    
-  modes = x$model$modes
+  modes = x$model$specs$modes
   loadings = x$outer_model$loading
   out.weights = x$outer_model$weight
   lvs = nrow(IDM)

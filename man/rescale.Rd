@@ -43,15 +43,15 @@
  sat.mod = rep("A", 6)
 
  # apply plspm
- my_pls = plspm(satisfaction, sat.inner, sat.outer, sat.mod, scheme="factor",
+ my_pls = plspm(satisfaction, sat.inner, sat.outer, sat.mod,
               scaled=FALSE)
 
  # rescaling standardized scores of latent variables
- scores = rescale(my_pls)
+ new_scores = rescale(my_pls)
 
  # compare standardized LVs against rescaled LVs
- summary(my_pls$latents)
- summary(scores)
+ summary(my_pls$scores)
+ summary(new_scores)
  }
 }
 \author{

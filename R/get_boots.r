@@ -8,12 +8,11 @@
 #' @param blocks list of vectors with column indices
 #' @param specs list with algorithm specifications
 #' @param br number of bootstrap resamples
-#' @param plsr logical to get path coefficients by pls regression
 #' @keywords internal
 #' @template internals
 #' @export
 get_boots <-
-function(DM, path_matrix, blocks, specs, br, plsr)
+function(DM, path_matrix, blocks, specs, br)
 {
   # =======================================================
   # inputs setting
@@ -47,7 +46,7 @@ function(DM, path_matrix, blocks, specs, br, plsr)
     X = do.call(cbind, out.ws$QQ)  # quantified MVs
   }
   
-  pathmod <- get_paths(path_matrix, Y.lvs, plsr)
+  pathmod <- get_paths(path_matrix, Y.lvs)
   Path <- pathmod[[2]]
   path.orig <- as.vector(Path[path_matrix==1])
   r2.orig <- pathmod[[3]][endo==1]
@@ -96,7 +95,7 @@ function(DM, path_matrix, blocks, specs, br, plsr)
       X.boot = do.call(cbind, w.boot$QQ)  # quantified MVs
     }
     WEIGS[i,] <- w.boot$w
-    pathmod <- get_paths(path_matrix, Y.boot, plsr)
+    pathmod <- get_paths(path_matrix, Y.boot)
     P.boot <- pathmod[[2]]
     Toef.boot <- get_effects(P.boot)
     PATHS[i,] <- as.vector(P.boot[path_matrix==1])

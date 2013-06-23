@@ -9,6 +9,9 @@
 
   \item{path_matrix}{matrix with path connections}
 }
+\value{
+  list with number and names of observations, MVs and LVs
+}
 \description{
   Internal function not to be called by the user
 }

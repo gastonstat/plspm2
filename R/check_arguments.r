@@ -17,7 +17,6 @@
 #' (only used if \code{scaling} is provided)
 #' @param bootstrap logical indicating whether bootstrap validation is performed.
 #' @param br integer indicating the number bootstrap resamples.
-#' @param plsr logical indicating whether to use pls regression for path coefs.
 #' @param dataset logical indicating whether the data matrix should be retrieved.
 #' @return list of validated arguments
 #' @keywords internal
@@ -25,7 +24,7 @@
 #' @export
 check_args <- 
 function(Data, path_matrix, blocks, scaling, modes, scheme,
-         scaled, tol, maxiter, plscomp, plsr, boot.val, br, dataset)
+         scaled, tol, maxiter, plscomp, boot.val, br, dataset)
 {
   # check definitions
   Data = check_data(Data)
@@ -34,7 +33,7 @@ function(Data, path_matrix, blocks, scaling, modes, scheme,
   specs = check_specs(blocks, scaling, modes, scheme, scaled, 
                       tol, maxiter, plscomp)
   boot_args = check_boot(boot.val, br)
-  if (!is.logical(plsr)) plsr = FALSE
+#  if (!is.logical(plsr)) plsr = FALSE
   if (!is.logical(dataset)) dataset = TRUE
   
   # check congruence between inner model and outer model

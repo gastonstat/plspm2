@@ -5,13 +5,12 @@
 #' 
 #' @param path_matrix path matrix
 #' @param Y_lvs Matrix of latent variables
-#' @param coefs_by_plsr logical to indicate path coefs by pls regression
 #' @param full logical to indicate all results from 'summary(lm())'
 #' @return list with inner results, path coefs matrix, R2, and residuals
 #' @keywords internal
 #' @template internals
 #' @export
-get_paths <-  function(path_matrix, Y_lvs, coefs_by_plsr, full=TRUE)
+get_paths <-  function(path_matrix, Y_lvs, full=TRUE)
 {
   lvs_names = colnames(path_matrix)
   endogenous = as.logical(rowSums(path_matrix))
@@ -33,10 +32,15 @@ get_paths <-  function(path_matrix, Y_lvs, coefs_by_plsr, full=TRUE)
     residuals[[aux]] = path_lm$residuals  
     R2[k1] = path_lm$r.squared
     inn_val = c(path_lm$r.squared, path_lm$coef[,1])
-    inn_lab = c("R2", "Intercept", 
-                paste(rep("path_",length(k2)),names(k2),sep=""))
-    names(inn_val) = NULL
-    results[[aux]] <- data.frame(concept=inn_lab, value=round(inn_val, 4))    
+    # ----- NEW results
+    inn_labels = c("Intercept", names(k2))
+    rownames(path_lm$coefficients) = inn_labels
+    results[[aux]] <- path_lm$coefficients
+    # ----- OLD results
+    # inn_lab = c("R2", "Intercept", 
+    # paste(rep("path_",length(k2)),names(k2),sep=""))
+    # names(inn_val) = NULL
+    # results[[aux]] <- data.frame(concept=inn_lab, value=round(inn_val, 4))
   }
   names(results) = lvs_names[endogenous]  
   names(R2) = lvs_names

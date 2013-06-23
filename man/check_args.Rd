@@ -3,8 +3,8 @@
 \title{Check arguments for \code{plspm} and \code{plspm.fit}}
 \usage{
   check_args(Data, path_matrix, blocks, scaling, modes,
-    scheme, scaled, tol, maxiter, plscomp, plsr, boot.val,
-    br, dataset)
+    scheme, scaled, tol, maxiter, plscomp, boot.val, br,
+    dataset)
 }
 \arguments{
   \item{Data}{numeric matrix or data frame containing the
@@ -42,9 +42,6 @@
 
   \item{br}{integer indicating the number bootstrap
   resamples.}
-
-  \item{plsr}{logical indicating whether to use pls
-  regression for path coefs.}
 
   \item{dataset}{logical indicating whether the data matrix
   should be retrieved.}

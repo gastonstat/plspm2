@@ -2,15 +2,12 @@
 \alias{get_paths}
 \title{Calculate path coefficients for \code{plspm}}
 \usage{
-  get_paths(path_matrix, Y_lvs, coefs_by_plsr, full = TRUE)
+  get_paths(path_matrix, Y_lvs, full = TRUE)
 }
 \arguments{
   \item{path_matrix}{path matrix}
 
   \item{Y_lvs}{Matrix of latent variables}
-
-  \item{coefs_by_plsr}{logical to indicate path coefs by
-  pls regression}
 
   \item{full}{logical to indicate all results from
   'summary(lm())'}

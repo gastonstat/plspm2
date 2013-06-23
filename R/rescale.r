@@ -38,15 +38,15 @@
 #'  sat.mod = rep("A", 6)
 #'  
 #'  # apply plspm
-#'  my_pls = plspm(satisfaction, sat.inner, sat.outer, sat.mod, scheme="factor", 
+#'  my_pls = plspm(satisfaction, sat.inner, sat.outer, sat.mod, 
 #'               scaled=FALSE)
 #'               
 #'  # rescaling standardized scores of latent variables
-#'  scores = rescale(my_pls)
+#'  new_scores = rescale(my_pls)
 #'  
 #'  # compare standardized LVs against rescaled LVs
-#'  summary(my_pls$latents)
-#'  summary(scores)
+#'  summary(my_pls$scores)
+#'  summary(new_scores)
 #'  }
 #'
 rescale <- function(pls, Y = NULL)
@@ -55,26 +55,17 @@ rescale <- function(pls, Y = NULL)
   # checking arguments
   # =======================================================
   if (!inherits(pls, "plspm"))
-    stop("\nSorry, an object of class 'plspm' was expected")
-  # if Y available
-  if (!is.null(Y))
-  {
-    if (is.null(pls$data))
-    {
-      if (!is.matrix(Y) && !is.data.frame(Y))
-        stop("\n'Y' must be a numeric matrix or data frame")
-      if (nrow(Y) != nrow(pls$latents))
-        stop("\n'pls' and 'Y' are incompatible. Different number of rows")
-    }
-  } else { 
-    # if no Y
-    if (is.null(pls$data)) 
-      stop("\n'Y' is missing; No dataset available in 'pls'")
-  }
-  # check positive outer weights
-  wgs = pls$outer_weights
+    stop("\nSorry, an object of class 'plspm' is expected")
+  # test availibility of dataset (either Y or pls$data)
+  test_dataset(Y, pls$data, pls$model$gens$obs)
+  # non-metric scaling is allowed
+  metric = get_metric(pls$model$scaling)
+  if (!metric) 
+    stop("\nSorry, 'rescale()' requires 'pls' to have scaling=NULL")
+  # all outer weights must be positive
+  wgs = pls$outer_model$weight
   if (any(wgs < 0))
-    stop("\nSorry, all outer weights must be positive")
+    stop("\nSorry, 'rescale()' requires all outer weights to be positive")
   
   # =======================================================
   # prepare ingredients
@@ -85,7 +76,6 @@ rescale <- function(pls, Y = NULL)
   lvs = nrow(IDM)
   mvs = sum(lengths(blocks))
   LVS = pls$scores
-#  outer = pls$model$outer
   
   # create block list
   blocklist = indexify(blocks)
@@ -99,9 +89,10 @@ rescale <- function(pls, Y = NULL)
   if (!is.null(pls$data)) 
   {
     # get rescaled scores
+    if (is.data.frame(pls$data)) pls$data = as.matrix(pls$data)
     Scores = pls$data %*% ODM
   } else {         
-    # building data matrix 'DM'
+    # building data matrix 'DM' when dataset=FALSE
     DM = matrix(NA, nrow(pls$scores), mvs)
     for (k in 1:lvs)
       DM[,blocklist==k] <- as.matrix(Y[,blocks[[k]]])

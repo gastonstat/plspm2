@@ -24,9 +24,6 @@ get_unidim <- function(DM, blocks, modes)
   blockinds = indexify(blocks)
   block_sizes = lengths(blocks)
   #  blocklist = unlist(lapply(block_sizes, function(x) rep(x, x)))
-  Mode <- modes
-  Mode[modes == "A"] = "Reflective"
-  Mode[modes == "B"] = "Formative"   
   obs = nrow(DM)
   sdvf = sqrt((nrow(DM)-1) / nrow(DM)) 
   
@@ -70,7 +67,7 @@ get_unidim <- function(DM, blocks, modes)
       eig.2nd[aux] = acp$sdev[2]^2
     }
   }
-  unidim = data.frame(Type.measure = Mode, 
+  unidim = data.frame(Mode = modes, 
                       MVs = block_sizes,
                       C.alpha = Alpha, 
                       DG.rho = Rho,

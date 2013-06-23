@@ -7,6 +7,7 @@
 #'
 #' @param MV matrix of manifest variables
 #' @param path_matrix matrix with path connections
+#' @return list with number and names of observations, MVs and LVs
 #' @keywords internal
 #' @template internals
 #' @export
