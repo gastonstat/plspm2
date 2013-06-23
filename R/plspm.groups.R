@@ -41,8 +41,9 @@
 #' Esposito Vinzi V., Morineau A. (Eds.) \emph{PLS and Related Methods - 
 #' Proceedings of the International Symposium PLS03.} Decisia, pp. 33-43.
 #' 
-#' Chin, W.W. (2000) Frequently Asked Questions, Partial Least Squares PLS-Graph. 
-#' Available from: \url{http://disc-nt.cba.uh.edu/chin/plsfaq/multigroup.htm}
+#' Chin, W.W. (2000) Frequently Asked Questions, Partial Least Squares 
+#' PLS-Graph. Available from: 
+#' \url{http://disc-nt.cba.uh.edu/chin/plsfaq/multigroup.htm}
 #' @seealso \code{\link{plspm}}
 #' @export
 #' @examples

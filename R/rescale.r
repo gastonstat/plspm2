@@ -59,7 +59,7 @@ rescale <- function(pls, Y = NULL)
   # test availibility of dataset (either Y or pls$data)
   test_dataset(Y, pls$data, pls$model$gens$obs)
   # non-metric scaling is allowed
-  metric = get_metric(pls$model$scaling)
+  metric = get_metric(pls$model$specs$scaling)
   if (!metric) 
     stop("\nSorry, 'rescale()' requires 'pls' to have scaling=NULL")
   # all outer weights must be positive
@@ -72,7 +72,7 @@ rescale <- function(pls, Y = NULL)
   # =======================================================
   IDM = pls$model$IDM
   blocks = pls$model$blocks   
-  modes = pls$model$modes
+  modes = pls$model$specs$modes
   lvs = nrow(IDM)
   mvs = sum(lengths(blocks))
   LVS = pls$scores

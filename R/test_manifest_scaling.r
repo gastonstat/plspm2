@@ -22,7 +22,7 @@ test_manifest_scaling <- function(MV, scaling)
       
       # factors can't be numeric or raw
       if (any(factors_scaling %in% c("num", "raw")))
-        stop("\n'Data' contains factors that can't have numeric scaling")
+        stop("\n'Data' contains factors that can't have metric scaling")
       
       # unordered factors must be nominal
       if (sum(factors_scaling == "ord") == 1) {
