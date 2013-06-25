@@ -2,12 +2,12 @@
 \alias{rescale}
 \title{Rescale Latent Variable Scores}
 \usage{
-  rescale(pls, Y = NULL)
+  rescale(pls, data = NULL)
 }
 \arguments{
   \item{pls}{object of class \code{"plspm"}}
 
-  \item{Y}{Optional dataset (matrix or data frame) used
+  \item{data}{Optional dataset (matrix or data frame) used
   when argument \code{dataset=NULL} inside \code{pls}.}
 }
 \value{

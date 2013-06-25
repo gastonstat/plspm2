@@ -8,7 +8,7 @@
 #' \code{rescale} requires all outer weights to be positive
 #' 
 #' @param pls object of class \code{"plspm"}
-#' @param Y Optional dataset (matrix or data frame) used when argument
+#' @param data Optional dataset (matrix or data frame) used when argument
 #' \code{dataset=NULL} inside \code{pls}.
 #' @return A data frame with the rescaled latent variable scores
 #' @author Gaston Sanchez
@@ -49,15 +49,15 @@
 #'  summary(new_scores)
 #'  }
 #'
-rescale <- function(pls, Y = NULL)
+rescale <- function(pls, data = NULL)
 {
   # =======================================================
   # checking arguments
   # =======================================================
   if (!inherits(pls, "plspm"))
     stop("\nSorry, an object of class 'plspm' is expected")
-  # test availibility of dataset (either Y or pls$data)
-  test_dataset(Y, pls$data, pls$model$gens$obs)
+  # test availibility of dataset (either data or pls$data)
+  test_dataset(data, pls$data, pls$model$gens$obs)
   # non-metric scaling is allowed
   metric = get_metric(pls$model$specs$scaling)
   if (!metric) 
@@ -95,7 +95,7 @@ rescale <- function(pls, Y = NULL)
     # building data matrix 'DM' when dataset=FALSE
     DM = matrix(NA, nrow(pls$scores), mvs)
     for (k in 1:lvs)
-      DM[,blocklist==k] <- as.matrix(Y[,blocks[[k]]])
+      DM[,blocklist==k] <- as.matrix(data[,blocks[[k]]])
     # get rescaled scores
     Scores = DM %*% ODM
   }

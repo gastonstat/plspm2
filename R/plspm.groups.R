@@ -105,9 +105,9 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
     method <- "bootstrap"
   }
   # check number of replicates
-  if (is.null(reps) | length(reps) > 1) reps <- 100
-  if (!is.numeric(reps) | floor(reps) <= 0) reps <- 100
-
+  if (is.null(reps) | length(reps) > 1) reps = 100
+  if (!is.numeric(reps) | floor(reps) <= 0) reps = 100
+  
   # =======================================================
   # inputs setting
   # =======================================================  
@@ -132,13 +132,8 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
   lvs.names = rownames(IDM)
   mvs = pls$model$gen$mvs
   # apply the selected scaling
-  if (scaled) {
-    sd.X <- sqrt((nrow(DM)-1)/nrow(DM)) * apply(DM, 2, sd)
-    X <- scale(DM, scale=sd.X)
-  } else {
-    X <- scale(DM, scale=FALSE)
-  }
-
+  X = get_data_scaled(DM, scaled)
+  
   # =======================================================
   # Global model estimation
   # =======================================================  
@@ -171,13 +166,8 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
   group1 <- which(g==levels(g)[1])
   ng1 <- length(group1)
   # apply the selected scaling
-  if (scaled) {
-    sd.Xg1 <- sqrt((ng1-1)/ng1) * apply(DM[group1,], 2, sd)
-    X.g1 <- scale(DM[group1,], scale=sd.Xg1)
-  } else {
-    X.g1 <- scale(DM[group1,], scale=FALSE)
-  }
-  wgs.g1 <- get_weights(X.g1, IDM, blocks, specs)
+  X.g1 = get_data_scaled(DM[group1,], scaled)
+  wgs.g1 = get_weights(X.g1, IDM, blocks, specs)
   ok_weights = test_null_weights(wgs.g1, specs)  
   Y1.lvs = get_scores(X.g1, wgs.g1$W)
   # Path coefficients 
@@ -195,13 +185,8 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
   group2 <- which(g==levels(g)[2])
   ng2 <- length(group2)
   # apply the selected scaling
-  if (scaled) {
-    sd.Xg2 <- sqrt((ng2-1)/ng2) * apply(DM[group2,], 2, sd)
-    X.g2 <- scale(DM[group2,], scale=sd.Xg2)
-  } else {
-    X.g2 <- scale(DM[group2,], scale=FALSE)
-  }
-  wgs.g2 <- get_weights(X.g2, IDM, blocks, specs)
+  X.g2 = get_data_scaled(DM[group2,], scaled)
+  wgs.g2 = get_weights(X.g2, IDM, blocks, specs)
   ok_weights = test_null_weights(wgs.g2, specs)  
   Y2.lvs = get_scores(X.g2, wgs.g2$W)
   # Path coefficients 
@@ -227,15 +212,8 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
       samg1 <- sample(group1, ng1, replace=TRUE) 
       samg2 <- sample(group2, ng2, replace=TRUE)
       # apply the selected scaling
-      if (scaled) {
-        sd.Xg1 <- sqrt((ng1-1)/ng1) * apply(DM[samg1,], 2, sd)
-        sd.Xg2 <- sqrt((ng2-1)/ng2) * apply(DM[samg2,], 2, sd)
-        X.g1 <- scale(DM[samg1,], scale=sd.Xg1)
-        X.g2 <- scale(DM[samg2,], scale=sd.Xg2)
-      } else {
-        X.g1 <- scale(DM[samg1,], scale=FALSE)
-        X.g2 <- scale(DM[samg2,], scale=FALSE)
-      }
+      X.g1 = get_data_scaled(DM[samg1,], scaled)
+      X.g2 = get_data_scaled(DM[samg2,], scaled)
       # outer weights
       wgs.g1 = get_weights(X.g1, IDM, blocks, specs)
       wgs.g2 = get_weights(X.g2, IDM, blocks, specs)
@@ -279,15 +257,8 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
       samg1 <- permu[1:ng1]
       samg2 <- permu[(ng1+1):(ng1+ng2)]
       # apply the selected scaling
-      if (scaled) {
-        sd.Xg1 <- sqrt((ng1-1)/ng1) * apply(DM[samg1,], 2, sd)
-        sd.Xg2 <- sqrt((ng2-1)/ng2) * apply(DM[samg2,], 2, sd)
-        X.g1 <- scale(DM[samg1,], scale=sd.Xg1)
-        X.g2 <- scale(DM[samg2,], scale=sd.Xg2)
-      } else {
-        X.g1 <- scale(DM[samg1,], scale=FALSE)
-        X.g2 <- scale(DM[samg2,], scale=FALSE)
-      }
+      X.g1 = get_data_scaled(DM[samg1,], scaled)
+      X.g2 = get_data_scaled(DM[samg2,], scaled)
       wgs.g1 <- get_weights(X.g1, IDM, blocks, specs)
       wgs.g2 <- get_weights(X.g2, IDM, blocks, specs)
       if (is.null(wgs.g1)) stop("Non convergence in bootstrap samples") 
@@ -313,9 +284,9 @@ function(pls, group, Y = NULL, method = "bootstrap", reps = NULL)
     res.path = round(cbind(path.global, path.g1, path.g2, dif.orig, p.val), 4)
     res <- data.frame(res.path, signi.path)
     colnames(res) = c("global", paste(rep("group",2), levels(g), sep="."), 
-                       "diff.abs", "p.value", "sig.05") 
+                      "diff.abs", "p.value", "sig.05") 
   }
-
+  
   # =======================================================
   # Results
   # =======================================================  

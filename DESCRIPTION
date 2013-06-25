@@ -9,13 +9,12 @@ Authors@R: c(
     person("Laura", "Trinchera", role = "aut"),
     person("Giorgio", "Russolillo", role = "aut"))
 Description: plspm contains a set of functions for performing Partial Least
-    Squares Path Modeling (PLS-PM) analysis. This is a new version that no
-    longer supports other PLS methods such as nipals, regression, and canonical
-    analysis. For the later methods use the package plsdepot.
+    Squares Path Modeling (PLS-PM) analysis for both metric and non-metric
+    data as well as REBUS analysis.
 URL: http://www.gastonsanchez.com/plspm,
     http://www.plsmodeling.com
 Depends:
-    R (>= 2.14.0),
+    R (>= 2.15.0),
     amap,
     diagram,
     turner
@@ -68,3 +67,13 @@ Collate:
     'plspm.fit.r'
     'plspm.groups.R'
     'test_dataset.r'
+    'get_GQI.r'
+    'get_locals_test.r'
+    'get_scaled_data.r'
+    'it.reb.r'
+    'local.models.r'
+    'print.rebus.r'
+    'rebus.pls.r'
+    'rebus.test.r'
+    'res.clus.r'
+    'sim-rebus-ex.r'
