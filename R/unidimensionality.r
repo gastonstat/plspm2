@@ -3,8 +3,9 @@
 #' @description
 #' Compute unidimensionality indices (a.k.a. Composite Reliability indices)
 #'
-#' @param DM Data Matrix
-#' @param blocks vector with numbers of variables per block
+#' @param Data matrix or data frame with variables
+#' @param blocks optional list with vectors indicating the 
+#' variables in each block
 #' @return A data frame with the following columns:
 #' @return \item{Block}{name of block}
 #' @return \item{MVs}{number of manifest variables in each block}
@@ -28,19 +29,24 @@
 #'  unidim(satisfaction, ima_expe)
 #'  }
 #'
-unidim <- function(DM, blocks)
+unidim <- function(Data, blocks = NULL)
 {
   # check arguments
-  DM = check_data(DM)
-  blocks = check_blocks(blocks)
+  DM = check_data(Data)
+  if (!is.null(blocks)) {
+    blocks = check_blocks(blocks, DM)
+    DM = get_manifests(DM, blocks)
+  } else {
+    blocks = list(1:ncol(DM))
+  }
   if (is.null(names(blocks)))
-    names(blocks) = paste("block", 1:length(blocks), sep='')
-
+    names(blocks) = paste("block", 1:length(blocks), sep='')    
+  
   # inputs setting
   lvs = length(blocks) 
   lvs_names = names(blocks)
-  block_sizes = unlist(lapply(blocks, length))
-  blocklist = unlist(lapply(block_sizes, function(x) rep(x, x)))
+  block_sizes = lengths(blocks)
+  blocklist = indexify(blocks)
   correction = sqrt((nrow(DM)-1) / nrow(DM)) 
   
   # initializing indices
@@ -115,12 +121,9 @@ unidim <- function(DM, blocks)
 alpha <- function(X)
 {
   # checking input
-  if (!is.numeric(X)) {
-    stop("\nA numeric matrix was expected")
-  } else {
-    if (!is.matrix(X))
-      X = as.matrix(X)
-  }
+  if (!is.matrix(X)) X = as.matrix(X)
+  if (!is.numeric(X))
+    stop("\n'alpha()' requires a numeric matrix")
   
   # cronbach's alpha
   Alpha = 1
@@ -166,12 +169,9 @@ alpha <- function(X)
 rho <- function(X)
 {
   # checking input
-  if (!is.numeric(X)) {
-    stop("\nA numeric matrix was expected")
-  } else {
-    if (!is.matrix(X))
-      X = as.matrix(X)
-  }
+  if (!is.matrix(X)) X = as.matrix(X)
+  if (!is.numeric(X))
+    stop("\n'rho()' requires a numeric matrix")
   
   # dillon-goldstein's rho
   Rho = 1

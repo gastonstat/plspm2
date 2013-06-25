@@ -28,18 +28,17 @@
   measurement for each block. Possible values are:
   \code{"A", "B", "newA", "PLScore", "PLScow"}. The length
   of \code{modes} must be equal to the length of
-  \code{blocks}).}
+  \code{blocks}.}
 
   \item{scheme}{string indicating the type of inner
   weighting scheme. Possible values are \code{"centroid"},
   \code{"factorial"}, or \code{"path"}.}
 
-  \item{scaled}{logical value indicating whether manifest
-  variables should be standardized. Only used when
-  \code{scaling = NULL}. When (\code{TRUE} data is scaled
-  to standardized values (mean=0 and variance=1). The
-  variance is calculated dividing by \code{N} instead of
-  \code{N-1}).}
+  \item{scaled}{whether manifest variables should be
+  standardized. Only used when \code{scaling = NULL}. When
+  (\code{TRUE} data is scaled to standardized values
+  (mean=0 and variance=1). The variance is calculated
+  dividing by \code{N} instead of \code{N-1}).}
 
   \item{tol}{decimal value indicating the tolerance
   criterion for the iterations (\code{tol=0.000001}). Can
@@ -78,14 +77,14 @@
 \description{
   Estimate path models with latent variables by partial
   least squares approach without providing the full list of
-  results as \code{plspm}. This might be helpful when doing
-  simulations, intensive computations, or when you don't
-  want the whole enchilada.
+  results as \code{plspm()}. This might be helpful when
+  doing simulations, intensive computations, or when you
+  don't want the whole enchilada.
 }
 \details{
   \code{plspm.fit} performs the basic PLS algorithm and
   provides limited results (e.g. outer model, inner model,
-  scores, path coefficients R2). \cr
+  scores, and path coefficients). \cr
 
   The argument \code{path_matrix} is a matrix of zeros and
   ones that indicates the structural relationships between
@@ -108,16 +107,17 @@
  VAL = c(0,1,1,0,0,0)
  SAT = c(1,1,1,1,0,0)
  LOY = c(1,0,0,0,1,0)
- sat_inner = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
+ sat_path = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
 
  # outer model list
- sat_outer = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
+ sat_blocks = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
 
  # vector of reflective modes
- sat_mod = rep("A", 6)
+ sat_modes = rep("A", 6)
 
  # apply plspm.fit
- satpls = plspm.fit(satisfaction, sat_inner, sat_outer, sat_mod, scaled=FALSE)
+ satpls = plspm.fit(satisfaction, sat_path, sat_blocks, sat_modes,
+     scaled=FALSE)
 
  # summary of results
  summary(satpls)
@@ -135,7 +135,7 @@
   Statistics & Data Analysis}, \bold{48}, pp. 159-205.
 
   Lohmoller J.-B. (1989) \emph{Latent variables path
-  modelin with partial least squares.} Heidelberg:
+  modeling with partial least squares.} Heidelberg:
   Physica-Verlag.
 
   Wold H. (1985) Partial Least Squares. In: Kotz, S.,
@@ -147,5 +147,8 @@
   \emph{Systems under indirect observations: Causality,
   structure, prediction}, Part 2, pp. 1-54. Amsterdam:
   Holland.
+}
+\seealso{
+  \code{\link{innerplot}}, \code{\link{plot.plspm}},
 }
 

@@ -10,8 +10,7 @@
 #' @keywords internal
 #' @template internals
 #' @export
-get_rho <-
-function(Block, score)
+get_rho <- function(Block, score)
 {
   # dillon-goldstein rho
   p = ncol(Block)

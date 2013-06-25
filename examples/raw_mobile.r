@@ -10,7 +10,7 @@ for (i in 1:length(files))
 
 # another dataset when sourcing files
 setwd("/Users/Gaston/Documents/R_project_plspm/datasets")
-satisfaction = read.csv('mobile.csv', row.names=1)
+mobile = read.csv('mobile.csv', row.names=1)
 
 
 # path matrix
@@ -33,7 +33,7 @@ sat_blocks = list(1:5, 6:8, 9:15, 16:17, 18:20, 21, 22:24)
 sat_mod = rep("A", 7)
 
 # apply plspm
-satpls = plspm(satisfaction, sat_path, sat_blocks, modes = sat_mod, 
+satpls = plspm(mobile, sat_path, sat_blocks, modes = sat_mod, 
                scaled = FALSE)
 
 # plot diagram of the inner model

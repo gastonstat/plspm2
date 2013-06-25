@@ -29,18 +29,17 @@
   measurement for each block. Possible values are:
   \code{"A", "B", "newA", "PLScore", "PLScow"}. The length
   of \code{modes} must be equal to the length of
-  \code{blocks}).}
+  \code{blocks}.}
 
   \item{scheme}{string indicating the type of inner
   weighting scheme. Possible values are \code{"centroid"},
   \code{"factorial"}, or \code{"path"}.}
 
-  \item{scaled}{logical value indicating whether manifest
-  variables should be standardized. Only used when
-  \code{scaling = NULL}. When (\code{TRUE} data is scaled
-  to standardized values (mean=0 and variance=1). The
-  variance is calculated dividing by \code{N} instead of
-  \code{N-1}).}
+  \item{scaled}{whether manifest variables should be
+  standardized. Only used when \code{scaling = NULL}. When
+  (\code{TRUE} data is scaled to standardized values
+  (mean=0 and variance=1). The variance is calculated
+  dividing by \code{N} instead of \code{N-1}).}
 
   \item{tol}{decimal value indicating the tolerance
   criterion for the iterations (\code{tol=0.000001}). Can
@@ -55,18 +54,17 @@
   non-metric data (only used if \code{scaling} is
   provided)}
 
-  \item{boot.val}{logical value indicating whether
-  bootstrap validation is performed (\code{FALSE} by
+  \item{boot.val}{whether bootstrap validation should be
+  performed. (\code{FALSE} by default).}
+
+  \item{br}{number bootstrap resamples. Used only when
+  \code{boot.val=TRUE}. When \code{boot.val=TRUE}, the
+  default number of re-samples is 100, but it can be
+  specified in a range from 100 to 1000.}
+
+  \item{dataset}{whether the data matrix used in the
+  computations should be retrieved (\code{TRUE} by
   default).}
-
-  \item{br}{integer indicating the number bootstrap
-  resamples. Used only when \code{boot.val=TRUE}. When
-  \code{boot.val=TRUE}, the default number of re-samples is
-  100, but it can be specified in a range from 100 to
-  1000.}
-
-  \item{dataset}{logical value indicating whether the data
-  matrix should be retrieved (\code{TRUE} by default).}
 }
 \value{
   An object of class \code{"plspm"}.
@@ -109,7 +107,8 @@
   \item{gof}{Goodness-of-Fit index}
 
   \item{data}{Data matrix containing the manifest variables
-  used in the model. Only when \code{dataset=TRUE}}
+  used in the model. Only available when
+  \code{dataset=TRUE}}
 
   \item{boot}{List of bootstrapping results; only available
   when argument \code{boot.val=TRUE}}
@@ -176,7 +175,7 @@ outerplot(satpls, what="weights")
   Statistics & Data Analysis}, \bold{48}, pp. 159-205.
 
   Lohmoller J.-B. (1989) \emph{Latent variables path
-  modelin with partial least squares.} Heidelberg:
+  modeling with partial least squares.} Heidelberg:
   Physica-Verlag.
 
   Wold H. (1985) Partial Least Squares. In: Kotz, S.,
@@ -190,6 +189,6 @@ outerplot(satpls, what="weights")
   Holland.
 }
 \seealso{
-  \code{\link{innerplot}}, \code{\link{plot.plspm}}
+  \code{\link{innerplot}}, \code{\link{plot.plspm}},
 }
 

@@ -23,12 +23,12 @@
 #' \code{scaling} must be specified when working with non-metric variables.
 #' @param modes character vector indicating the type of measurement for each
 #' block. Possible values are: \code{"A", "B", "newA", "PLScore", "PLScow"}. 
-#' The length of \code{modes} must be equal to the length of \code{blocks}).
+#' The length of \code{modes} must be equal to the length of \code{blocks}.
 #' @param scheme string indicating the type of inner weighting
 #' scheme. Possible values are \code{"centroid"}, \code{"factorial"}, or
 #' \code{"path"}.
-#' @param scaled logical value indicating whether manifest variables should be 
-#' standardized. Only used when \code{scaling = NULL}. When (\code{TRUE} data is 
+#' @param scaled whether manifest variables should be standardized. 
+#' Only used when \code{scaling = NULL}. When (\code{TRUE} data is 
 #' scaled to standardized values (mean=0 and variance=1). 
 #' The variance is calculated dividing by \code{N} instead of \code{N-1}).
 #' @param tol decimal value indicating the tolerance criterion for the
@@ -38,12 +38,12 @@
 #' @param plscomp optional vector indicating the number of PLS components
 #' (for each block) to be used when handling non-metric data 
 #' (only used if \code{scaling} is provided)
-#' @param boot.val logical value indicating whether bootstrap validation is
-#' performed (\code{FALSE} by default). 
-#' @param br integer indicating the number bootstrap resamples. Used only
+#' @param boot.val whether bootstrap validation should be performed. 
+#' (\code{FALSE} by default). 
+#' @param br number bootstrap resamples. Used only
 #' when \code{boot.val=TRUE}. When \code{boot.val=TRUE}, the default number of 
 #' re-samples is 100, but it can be specified in a range from 100 to 1000.
-#' @param dataset logical value indicating whether the data matrix should be
+#' @param dataset whether the data matrix used in the computations should be
 #' retrieved (\code{TRUE} by default).
 #' @return An object of class \code{"plspm"}. 
 #' @return \item{outer_model}{Results of the outer model. Includes:
@@ -68,7 +68,7 @@
 #' (These results are only meaningful for reflective blocks)}
 #' @return \item{gof}{Goodness-of-Fit index}
 #' @return \item{data}{Data matrix containing the manifest variables used in the
-#' model. Only when \code{dataset=TRUE}}
+#' model. Only available when \code{dataset=TRUE}}
 #' @return \item{boot}{List of bootstrapping results; only available 
 #' when argument \code{boot.val=TRUE}}
 #' @author Gaston Sanchez, Giorgio Russolilo
@@ -77,7 +77,7 @@
 #' (2005) PLS path modeling. \emph{Computational Statistics & Data Analysis},
 #' \bold{48}, pp. 159-205.
 #'
-#' Lohmoller J.-B. (1989) \emph{Latent variables path modelin with partial
+#' Lohmoller J.-B. (1989) \emph{Latent variables path modeling with partial
 #' least squares.} Heidelberg: Physica-Verlag.
 #'
 #' Wold H. (1985) Partial Least Squares. In: Kotz, S., Johnson, N.L. (Eds.),
@@ -87,7 +87,7 @@
 #' Wold H. (1982) Soft modeling: the basic design and some extensions. In: K.G.
 #' Joreskog & H. Wold (Eds.), \emph{Systems under indirect observations:
 #' Causality, structure, prediction}, Part 2, pp. 1-54. Amsterdam: Holland.
-#' @seealso \code{\link{innerplot}}, \code{\link{plot.plspm}}
+#' @seealso \code{\link{innerplot}}, \code{\link{plot.plspm}}, 
 #' @example R/satis-plspm-ex.r
 #' @export
 plspm <-

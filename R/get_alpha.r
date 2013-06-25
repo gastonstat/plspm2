@@ -9,8 +9,7 @@
 #' @keywords internal
 #' @template internals
 #' @export
-get_alpha <-
-function(Block)
+get_alpha <- function(Block)
 {
   # how many variables
   p = ncol(Block)

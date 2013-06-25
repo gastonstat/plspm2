@@ -2,12 +2,13 @@
 \alias{unidim}
 \title{Unidimensionality of blocks}
 \usage{
-  unidim(DM, blocks)
+  unidim(Data, blocks = NULL)
 }
 \arguments{
-  \item{DM}{Data Matrix}
+  \item{Data}{matrix or data frame with variables}
 
-  \item{blocks}{vector with numbers of variables per block}
+  \item{blocks}{optional list with vectors indicating the
+  variables in each block}
 }
 \value{
   A data frame with the following columns:

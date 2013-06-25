@@ -24,8 +24,8 @@
 #' @note \code{outerplot} uses the function
 #' \code{\link{plotmat}} of package \code{diagram}. \cr
 #' \url{http://cran.r-project.org/web/packages/diagram/vignettes/diagram.pdf}
-#' @seealso \code{\link{innerplot}}, \code{\link{plot.plspm}}, \code{\link{plspm}},
-#' \code{\link{plot.plspm}}
+#' @seealso \code{\link{innerplot}}, \code{\link{plot.plspm}}, 
+#' \code{\link{plspm}}
 #' @export 
 outerplot <-
 function(x, what="loadings", colpos = "#6890c4BB", colneg = "#f9675dBB",

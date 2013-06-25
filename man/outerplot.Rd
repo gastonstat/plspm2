@@ -64,6 +64,6 @@
 }
 \seealso{
   \code{\link{innerplot}}, \code{\link{plot.plspm}},
-  \code{\link{plspm}}, \code{\link{plot.plspm}}
+  \code{\link{plspm}}
 }
 
