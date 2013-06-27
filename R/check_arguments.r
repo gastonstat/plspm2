@@ -33,7 +33,6 @@ function(Data, path_matrix, blocks, scaling, modes, scheme,
   specs = check_specs(blocks, scaling, modes, scheme, scaled, 
                       tol, maxiter, plscomp)
   boot_args = check_boot(boot.val, br)
-#  if (!is.logical(plsr)) plsr = FALSE
   if (!is.logical(dataset)) dataset = TRUE
   
   # check congruence between inner model and outer model
