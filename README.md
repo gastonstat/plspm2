@@ -6,7 +6,7 @@ GR (and LT): Ecco il prototipo del pacchetto (sotto il nome `plspm2`)!
 ## Installation
 
 **Passo 1)** In order to install `plspm2` you need to use the R package devtools. Run in your R console:
-```
+```ruby
 # install "devtools"
 install.packages("devtools") 
 library(devtools)
@@ -14,7 +14,7 @@ library(devtools)
 
 **Passo 2)** Then you need to install the packages `tester` and `turner`.
 Run in your R console:
-```
+```ruby
 # install "tester" and "turner"
 install_github('tester', username='gastonstat')
 install_github('turner', username='gastonstat')
@@ -22,7 +22,7 @@ install_github('turner', username='gastonstat')
 
 **Passo 3)** And finally, you install `plspm2`. 
 Run in your R console:
-```
+```ruby
 # install "plspm2""
 install_github('plspm2', username='gastonstat')
 
@@ -33,7 +33,7 @@ library(plspm2)
 
 ## Model for Russett data (original data set)
 Let's prepare the ingredients:
-```
+```ruby
 # load dataset russett 
 # (variable 'demo' as numeric)
 data(russa)
@@ -55,7 +55,7 @@ rus_modes = c("A", "A", "A")
 
 ## Example 1
 PLS-PM using data set 'russa' and scaling all 'NUM'
-```
+```ruby
 # PLS-PM using data set 'russa'
 rus_pls1 = plspm(russa, rus_path, rus_blocks, rus_scaling, rus_modes, 
                  scheme = "centroid", plscomp=c(1,1,1), tol = 0.0000001)
@@ -78,7 +78,7 @@ plot(rus_pls1)
 
 ## Example 2
 PLS-PM using data set 'russa', and different scaling
-```
+```ruby
 # new scaling
 rus_scaling2 = list(c("NUM", "NUM", "NUM"),
                    c("ORD", "ORD"),
@@ -94,7 +94,7 @@ rus_pls2$outer_model
 
 ## Example 3
 Now let's use data set 'russb' (it contains a factor!)
-```
+```ruby
 # take a peek
 head(russb)
 
@@ -109,7 +109,7 @@ rus_pls3$outer_model
 ## Example 4
 Don't run this example yet! We need to define what is *mode newA*. 
 Now let's change modes
-```
+```ruby
 # modes new A
 rus_modes2 = c("newA", "newA", "newA")
 
@@ -122,10 +122,10 @@ rus_pls4$outer_model
 ```
 
 ## Example 5
-Let's make things more interesting, flexible and versatile. How?
+Don't run this example either. Let's make things more interesting, flexible and versatile. How?
 What if you could have more freedom specifying the arguments? Now you can!
 Note that you can specify `blocks` using variables' names, the `scaling` types are NOT case senstive, neither are `modes` nor `scheme`. Isn't that cool?
-```
+```ruby
 # blocks
 rus_blocchi = list(
    c("gini", "farm", "rent"),
