@@ -73,10 +73,10 @@ check_data <- function(Data)
   if (ncol(Data) == 1)
     stop("\nCannot work with only one column in 'Data'")
   
-  if (is.null(rownames(Data))) 
+  if (lacks_rownames(Data))
     rownames(Data) = 1:nrow(Data)
   
-  if (is.null(colnames(Data))) 
+  if (lacks_colnames(Data)) 
     colnames(Data) = paste("MV", 1:ncol(Data), sep="")
   
   # return
@@ -118,14 +118,14 @@ check_path <- function(path_matrix)
     }      
   }
   
-  if (is.null(dimnames(path_matrix))) {
+  if (lacks_dimnames(path_matrix)) {
     LV_names = paste("LV", 1:ncol(path_matrix), sep = "")
     dimnames(path_matrix) = list(LV_names, LV_names)
   }
-  if (!is.null(rownames(path_matrix)) && is.null(colnames(path_matrix))) {
+  if (has_rownames(path_matrix) && lacks_colnames(path_matrix)) {
     colnames(path_matrix) = rownames(path_matrix)
   }
-  if (!is.null(colnames(path_matrix)) && is.null(rownames(path_matrix))) {
+  if (has_colnames(path_matrix) && lacks_rownames(path_matrix)) {
     rownames(path_matrix) = colnames(path_matrix)
   }
   

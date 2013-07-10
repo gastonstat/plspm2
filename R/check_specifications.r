@@ -226,7 +226,7 @@ check_plscomp <- function(plscomp, scaling)
     if (is.null(plscomp)) {
       plscomp = rep(1, length(scaling))      
     } else {
-      if (!is_positive_integer(plscomp))
+      if (any(!is_positive_integer(plscomp)))
         stop("\n'plscomp' must be an integer vector")
       if (length(scaling) != length(plscomp))
         stop("\nlength of 'plscomp' differs from number of blocks")

@@ -225,7 +225,8 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
              unidim = unidim, 
              gof = gof, 
              boot = bootstrap, 
-             data = data, 
+             data = data,
+             manifests = X,
              model = model)
   class(res) = "plspm"
   return(res)
