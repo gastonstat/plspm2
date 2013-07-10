@@ -196,7 +196,7 @@ check_tol <- function(tol)
 #' @export
 check_maxiter <- function(maxiter)
 {
-  if (mode(maxiter) != "numeric" || length(maxiter) != 1L || maxiter < 100) {
+  if (!is_positive_integer(maxiter) || maxiter < 100) {
     warning("Warning: Invalid 'maxiter'. Default 'maxiter=100' is used.")   
     maxiter = 100
   } 
@@ -226,7 +226,7 @@ check_plscomp <- function(plscomp, scaling)
     if (is.null(plscomp)) {
       plscomp = rep(1, length(scaling))      
     } else {
-      if (!is.vector(plscomp) || !is.numeric(plscomp))
+      if (!is_positive_integer(plscomp))
         stop("\n'plscomp' must be an integer vector")
       if (length(scaling) != length(plscomp))
         stop("\nlength of 'plscomp' differs from number of blocks")

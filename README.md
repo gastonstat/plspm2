@@ -12,10 +12,11 @@ install.packages("devtools")
 library(devtools)
 ```
 
-**Passo 2)** Then you need to install the package `turner`.
+**Passo 2)** Then you need to install the packages `tester` and `turner`.
 Run in your R console:
 ```
-# install "turner"
+# install "tester" and "turner"
+install_github('tester', username='gastonstat')
 install_github('turner', username='gastonstat')
 ```
 
@@ -106,6 +107,7 @@ rus_pls3$outer_model
 ```
 
 ## Example 4
+Don't run this example yet! We need to define what is *mode newA*. 
 Now let's change modes
 ```
 # modes new A

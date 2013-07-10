@@ -23,30 +23,30 @@
 #' @template internals
 #' @export
 check_args <- 
-function(Data, path_matrix, blocks, scaling, modes, scheme,
-         scaled, tol, maxiter, plscomp, boot.val, br, dataset)
-{
-  # check definitions
-  Data = check_data(Data)
-  path_matrix = check_path(path_matrix)
-  blocks = check_blocks(blocks, Data)
-  specs = check_specs(blocks, scaling, modes, scheme, scaled, 
-                      tol, maxiter, plscomp)
-  boot_args = check_boot(boot.val, br)
-  if (!is.logical(dataset)) dataset = TRUE
-  
-  # check congruence between inner model and outer model
-  good_model = check_model(path_matrix, blocks)
-  
-  # list with verified arguments
-  list(Data = Data,
-       path_matrix = path_matrix,
-       blocks = blocks,
-       specs = specs,
-       boot.val = boot_args$boot.val,
-       br = boot_args$br, 
-       dataset = dataset)
-}
+  function(Data, path_matrix, blocks, scaling, modes, scheme,
+           scaled, tol, maxiter, plscomp, boot.val, br, dataset)
+  {
+    # check definitions
+    Data = check_data(Data)
+    path_matrix = check_path(path_matrix)
+    blocks = check_blocks(blocks, Data)
+    specs = check_specs(blocks, scaling, modes, scheme, scaled, 
+                        tol, maxiter, plscomp)
+    boot_args = check_boot(boot.val, br)
+    if (!is.logical(dataset)) dataset = TRUE
+    
+    # check congruence between inner model and outer model
+    good_model = check_model(path_matrix, blocks)
+    
+    # list with verified arguments
+    list(Data = Data,
+         path_matrix = path_matrix,
+         blocks = blocks,
+         specs = specs,
+         boot.val = boot_args$boot.val,
+         br = boot_args$br, 
+         dataset = dataset)
+  }
 
 
 #' @title Check Data
@@ -61,14 +61,14 @@ function(Data, path_matrix, blocks, scaling, modes, scheme,
 #' @export
 check_data <- function(Data)
 {
-  if (is_not_tabular(Data))
+  if (!is.matrix(Data) && !is.data.frame(Data))
     stop("\nInvalid 'Data'. Must be a matrix or data frame.")
   
   if (is.matrix(Data) && !is.numeric(Data))
     stop("\nInvalid 'Data' matrix. Must be a numeric matrix.")
   
   if (nrow(Data) == 1)
-    stop("\nCannot work with only one row in 'Data'")
+    stop("\nCannot work with only one observation in 'Data'")
   
   if (ncol(Data) == 1)
     stop("\nCannot work with only one column in 'Data'")
@@ -96,23 +96,23 @@ check_data <- function(Data)
 #' @export
 check_path <- function(path_matrix)
 {
-  if (is_not_matrix(path_matrix))
+  if (!is.matrix(path_matrix))
     stop("\n'path_matrix' must be a matrix.")
   
-  if (!is_square_matrix(path_matrix))
+  if (nrow(path_matrix) != ncol(path_matrix))
     stop("\n'path_matrix' must be a square matrix.")
   
   if (nrow(path_matrix) == 1)
-    stop("\n'path_matrix' must have more than one row")
-  
-  if (!is_lower_triangular(path_matrix))
-    stop("\n'path_matrix' must be a lower triangular matrix")
-  
+    stop("\n'path_matrix' must have more than one element.")
   
   for (j in 1:ncol(path_matrix)) 
   {
     for (i in 1:nrow(path_matrix)) 
     {
+      if (i <= j) {
+        if (path_matrix[i,j] != 0) 
+          stop("\n'path_matrix' must be a lower triangular matrix")
+      }
       if (length(intersect(path_matrix[i,j], c(1,0))) == 0)
         stop("\nElements in 'path_matrix' must be '1' or '0'")
     }      
@@ -198,10 +198,11 @@ check_blocks <- function(blocks, Data)
 check_boot <- function(boot.val, br)
 {
   if (!is.logical(boot.val)) boot.val = FALSE
-
+  
   if (boot.val) {
-    if (!is.null(br)) {
-      if(!is_positive_integer(br) || length(br) != 1L || br < 10) {
+    if (!is.null(br)) {        
+      if (mode(br) != "numeric" || length(br) != 1L || 
+            (br %% 1) != 0 || br < 100 || br > 1000) {
         warning("Warning: Invalid argument 'br'. Default 'br=100' is used.")   
         br = 100
       } 
