@@ -1,7 +1,7 @@
-#' @title myPLSRdoubleQ
+#' @title get_PLSRdoubleQ
 #' 
 #' @details
-#' Internal function. \code{myPLSRdoubleQ}
+#' Internal function. \code{get_PLSRdoubleQ}
 #'
 #' @param Y numeric matrix
 #' @param Yc numeric matrix
@@ -48,7 +48,7 @@ function (Y = NULL, Yc = NULL, X = NULL, Xc = NULL, ncomp)
     q <- ncolY
   a <- ncomp
   Q <- matrix(, n, ncolXc)
-  Qy <- -matrix(, n, ncolYc)
+  Qy <- matrix(, n, ncolYc)
   W <- matrix(, p, a)
   rownames(W) <- c(colnames(X), colnames(Xc))
   U <- matrix(, n, a)

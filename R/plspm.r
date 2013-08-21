@@ -147,7 +147,8 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
     LV = get_scores(X, weights$W)
   } else {
     # object 'weights' contains outer w's, W, Y, QQ, ODM, iter
-    weights = get_weights_nonmetric(X, path_matrix, blocks, specs)
+#    weights = get_weights_nonmetric(X, path_matrix, blocks, specs)
+    weights = get_weights_nm(X, path_matrix, blocks, specs)
     ok_weights = test_null_weights(weights, specs)
     outer_weights = weights$w
     LV = weights$Y

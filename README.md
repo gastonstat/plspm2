@@ -1,5 +1,4 @@
-Ciao bello
-============================
+# Ciao bello
 
 GR (and LT): Ecco il prototipo del pacchetto (sotto il nome `plspm2`)! 
 

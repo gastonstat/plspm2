@@ -30,7 +30,7 @@ function(blocks, scaling, modes, scheme, scaled, tol, maxiter, plscomp)
        scaled = check_scale$scaled,
        tol = check_tol(tol),
        maxiter = check_maxiter(maxiter),
-       plscomp = check_plscomp(plscomp, scaling))  
+       plscomp = check_plscomp(plscomp, scaling, modes))  
 }
 
 #' @title Check types of measurement scales and metric
@@ -94,7 +94,10 @@ check_scaling <- function(scaling, scaled, blocks)
 #' @details
 #' Internal function. \code{check_modes} is called by \code{check_specs}.
 #'
-#' @param modes character vector indicating the type of mode
+#' @param modes character vector indicating the type of measurement for each
+#' block. Values regular user can choose: \code{"A", "B", "newA"}
+#' Values Expert user can choose: \code{"A", "B", "newA", "PLScore", "PLScow"}. 
+#' The length of \code{modes} must be equal to the length of \code{blocks}.
 #' @param blocks list defining the blocks of manifest variables
 #' @return validated modes 
 #' @keywords internal
@@ -218,7 +221,7 @@ check_maxiter <- function(maxiter)
 #' @keywords internal
 #' @template internals
 #' @export
-check_plscomp <- function(plscomp, scaling)
+check_plscomp <- function(plscomp, scaling, modes)
 {
   if (is.null(scaling)) plscomp = NULL
   
@@ -232,14 +235,20 @@ check_plscomp <- function(plscomp, scaling)
         stop("\nlength of 'plscomp' differs from number of blocks")
       
       plscomp = as.integer(plscomp)
-      for (j in 1:length(plscomp)) {
+      for (j in 1:length(plscomp)) 
+      {
+        # plscomp's cannot exceed number of variables in block j
         if (plscomp[j] > length(scaling[[j]]))
+        {
           stop(sprintf("%s %d %s", "element", j, 
-                       "in 'plscomp' exceeds number of variables"))
-      }      
+                       "in 'plscomp' exceeds number of variables"))          
+        }
+        # make sure plscomp[j]=1 when mode "NEWA"
+        if (modes[j] == "NEWA") plscomp[j] = 1
+      }
     }
   }
-    
+  
   # output
   plscomp
 }

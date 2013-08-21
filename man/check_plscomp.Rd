@@ -2,7 +2,7 @@
 \alias{check_plscomp}
 \title{Check vector of PLS components (for non-metric plspm)}
 \usage{
-  check_plscomp(plscomp, scaling)
+  check_plscomp(plscomp, scaling, modes)
 }
 \arguments{
   \item{plscomp}{optional vector indicating the number of

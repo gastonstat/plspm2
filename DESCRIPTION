@@ -2,7 +2,7 @@ Package: plspm2
 Type: Package
 Title: Tools for Partial Least Squares Path Modeling
 Version: 0.4.0
-Date: 2013-07-10
+Date: 2013-08-22
 Authors@R: c(
     person("Gaston", "Sanchez",
     email = "gaston.stat@gmail.com", role = c("aut", "cre")),
@@ -78,3 +78,6 @@ Collate:
     'rebus.test.r'
     'res.clus.r'
     'sim-rebus-ex.r'
+    'get_PLSR.r'
+    'get_PLSR_NA.r'
+    'get_weights_nm.r'

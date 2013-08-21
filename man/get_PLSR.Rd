@@ -1,18 +1,13 @@
-\name{get_PLSRdoubleQ}
-\alias{get_PLSRdoubleQ}
-\title{get_PLSRdoubleQ}
+\name{get_PLSR}
+\alias{get_PLSR}
+\title{Internal PLS regression (full data)}
 \usage{
-  get_PLSRdoubleQ(Y = NULL, Yc = NULL, X = NULL, Xc = NULL,
-    ncomp)
+  get_PLSR(Y, X, ncomp)
 }
 \arguments{
-  \item{Y}{numeric matrix}
+  \item{Y}{an (already centered) vector of order n}
 
-  \item{Yc}{numeric matrix}
-
-  \item{X}{numeric matrix}
-
-  \item{Xc}{numeric matrix}
+  \item{X}{an (already centered) n x p matrix}
 
   \item{ncomp}{number of components}
 }
@@ -20,7 +15,7 @@
   Internal function not to be called by the user
 }
 \details{
-  Internal function. \code{get_PLSRdoubleQ}
+  Internal function. \code{get_PLSR}
 }
 \section{Warning}{
   Do NOT use this function unless you are ME, a package

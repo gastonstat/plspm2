@@ -6,7 +6,11 @@
 }
 \arguments{
   \item{modes}{character vector indicating the type of
-  mode}
+  measurement for each block. Values regular user can
+  choose: \code{"A", "B", "newA"} Values Expert user can
+  choose: \code{"A", "B", "newA", "PLScore", "PLScow"}. The
+  length of \code{modes} must be equal to the length of
+  \code{blocks}.}
 
   \item{blocks}{list defining the blocks of manifest
   variables}
