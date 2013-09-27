@@ -1,4 +1,5 @@
 \name{get_gof}
+\alias{GOF}
 \alias{get_gof}
 \title{Goodness-of-fit for \code{plspm}}
 \usage{
