@@ -91,7 +91,7 @@ function(X, path_matrix, blocks, specs)
     # =============================================================
     E <- switch(specs$scheme, 
                 "centroid" = sign(cor(Y) * link),
-                "factor" = cor(Y) * link,
+                "factor" = cov(Y) * link,
                 "path" = get_path_scheme(path_matrix, Y))
     # internal estimation of LVs 'Z'
     Z = Y %*% E

@@ -43,7 +43,7 @@ function(path_matrix, blocks, modes, communality, redundancy, R2)
   # output
   data.frame(Type = exo_endo, 
              R2 = R2, 
-             Mean_Communality = avg_comu, 
+             Block_Communality = avg_comu, 
              Mean_Redundancy = avg_redu, 
              AVE = AVE,
              row.names = rownames(path_matrix))
