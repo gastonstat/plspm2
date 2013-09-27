@@ -150,9 +150,12 @@ rus_pls5$outer_model
 
 Authors Contact
 ---------------
-Gaston Sanchez (gaston.stat at gmail.com)
+Gaston Sanchez [www.gastonsanchez.com](http://www.gastonsanchez.com)
+(`gaston.stat at gmail.com`)
 
-Laura Trinchera (ltr at rouenbs.fr)
+Laura Trinchera [rouenbs.academia.edu/LauraTrinchera](http://rouenbs.academia.edu/LauraTrinchera)
+(`ltr at rouenbs.fr`)
 
-Giorgio Russolillo (giorgio.russolillo at cnam.fr)
+Giorgio Russolillo [cnam.academia.edu/GiorgioRussolillo](http://cnam.academia.edu/GiorgioRussolillo)
+(`giorgio.russolillo at cnam.fr`)
 

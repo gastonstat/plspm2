@@ -1,14 +1,13 @@
 \name{get_gof}
-\alias{GOF}
 \alias{get_gof}
 \title{Goodness-of-fit for \code{plspm}}
 \usage{
   get_gof(comu, R2, blocks, path_matrix)
 }
 \arguments{
-  \item{comu}{communalities}
+  \item{comu}{list of communalities}
 
-  \item{R2}{R-squared coefficient}
+  \item{R2}{vector of R-squared coefficients}
 
   \item{blocks}{list of variables in each block}
 
