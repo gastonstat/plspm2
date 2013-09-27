@@ -26,7 +26,8 @@ get_gof <- function(comu, R2, blocks, path_matrix)
     if (length(blocklist==j) > 1)
     {
       comu_aux = comu_aux + sum(comu[blocklist==j])
-      n_comu = n_comu + length(blocklist==j)
+      #n_comu = n_comu + length(blocklist==j)
+      n_comu = n_comu + sum(blocklist==j)
     }
   }
   gof = sqrt((comu_aux / n_comu) * mean(R2_aux))
@@ -34,26 +35,27 @@ get_gof <- function(comu, R2, blocks, path_matrix)
   gof
 }
 
-
+#
 GOF <- function(comu, R2, blocks, path_matrix)
 {
-  lvs = nrow(path_matrix)
-  blocklist = indexify(blocks)  
-  endo = rowSums(path_matrix)
+  lvs = nrow(IDM)
+  blocklist = as.list(1:lvs)
+  for (j in 1:lvs) blocklist[[j]] = rep(j, blocks[j])
+  blocklist = unlist(blocklist)
+  endo = rowSums(IDM)
   endo[endo != 0] = 1  
-  
+  n.end = sum(endo)
   # average of communalities
-  R2_aux <- R2[endo == 1]
-  comu_aux <- n_comu <- 0    
+  R2.aux <- R2[endo == 1]
+  comu.aux <- n.comu <- 0    
   for (j in 1:lvs)
   {
-    if (length(blocklist==j) > 1)
+    if (length(which(blocklist==j)) > 1)
     {
-      comu_aux = comu_aux + sum(comu[blocklist==j])
-      n_comu = n_comu + length(blocklist==j)
+      comu.aux = comu.aux + sum(comu[which(blocklist==j)])
+      n.comu = n.comu + length(which(blocklist==j))
     }
   }
-  gof = sqrt((comu_aux / n_comu) * mean(R2_aux))
-  # output
-  gof
+  gof = sqrt((comu.aux/n.comu) * mean(R2.aux))
+  return(gof)
 }
