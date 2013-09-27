@@ -53,7 +53,7 @@ rus_modes = c("A", "A", "A")
 ```
 
 ## Example 1
-PLS-PM using data set 'russa' and scaling all 'NUM'
+PLS-PM using data set `russa` and scaling all 'NUM'
 ```ruby
 # PLS-PM using data set 'russa'
 rus_pls1 = plspm(russa, rus_path, rus_blocks, rus_scaling, rus_modes, 
@@ -76,7 +76,7 @@ plot(rus_pls1)
 
 
 ## Example 2
-PLS-PM using data set 'russa', and different scaling
+PLS-PM using data set `russa`, and different scaling
 ```ruby
 # new scaling
 rus_scaling2 = list(c("NUM", "NUM", "NUM"),
@@ -92,7 +92,7 @@ rus_pls2$outer_model
 ```
 
 ## Example 3
-Now let's use data set 'russb' (it contains a factor!)
+Now let's use data set `russb` (it contains a factor!)
 ```ruby
 # take a peek
 head(russb)
@@ -150,12 +150,12 @@ rus_pls5$outer_model
 
 Authors Contact
 ---------------
-Gaston Sanchez [www.gastonsanchez.com](http://www.gastonsanchez.com)
-(`gaston.stat at gmail.com`)
+[Gaston Sanchez](http://www.gastonsanchez.com)
+  (`gaston.stat at gmail.com`)
 
-Laura Trinchera [rouenbs.academia.edu/LauraTrinchera](http://rouenbs.academia.edu/LauraTrinchera)
-(`ltr at rouenbs.fr`)
+[Laura Trinchera](http://rouenbs.academia.edu/LauraTrinchera)
+  (`ltr at rouenbs.fr`)
 
-Giorgio Russolillo [cnam.academia.edu/GiorgioRussolillo](http://cnam.academia.edu/GiorgioRussolillo)
-(`giorgio.russolillo at cnam.fr`)
+[Giorgio Russolillo](http://cnam.academia.edu/GiorgioRussolillo)
+  (`giorgio.russolillo at cnam.fr`)
 
