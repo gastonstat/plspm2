@@ -4,8 +4,8 @@
 #' Internal function. \code{get_manifests} is called by \code{plspm}.
 #' 
 #' @param Data matrix or data frame from which manifest variables are extracted
-#' @param blocks list (wtih numeric elements) indicating the set of manifest variables
-#' that form each block
+#' @param blocks list (wtih numeric elements) indicating the set of manifest 
+#' variables that form each block
 #' @return matrix or data frame of selected manifest variables
 #' @keywords internal
 #' @template internals

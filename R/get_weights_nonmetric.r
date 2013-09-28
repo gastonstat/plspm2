@@ -24,8 +24,9 @@ function(X, path_matrix, blocks, specs)
   blockinds = indexify(blocks)
   block_sizes = lengths(blocks)
   PLScomp = specs$plscomp
+  start_end = from_to(block_sizes)
   
-  # dummy matrices for categorical manifest variables
+  # create dummy matrices for categorical manifest variables
   dummies = get_dummies(X, specs)
   
   ## transforming X in a list of blocks
@@ -109,17 +110,21 @@ function(X, path_matrix, blocks, specs)
       # Quantification of the MVs in block ["QQ"]
       # =============================================================
       # for each MV in block 'q'
-      for (p in 1:block_sizes[q]) {
+      for (p in 1L:block_sizes[q]) {
         if (specs$scaling[[q]][p] == "nom") {
           # extract corresponding dummy matrix
-          aux_dummy = dummies[[blocks[[q]][p]]]
+#          aux_dummy = dummies[[blocks[[q]][p]]]
+          which_dummy = (start_end$from[q]:start_end$to[q])[p]
+          aux_dummy = dummies[[which_dummy]]
           # apply scaling
           QQ[[q]][,p] = get_nom_scale(Z[,q], Xblocks[[q]][,p], aux_dummy)
           QQ[[q]][,p] = get_num_scale(QQ[[q]][,p])
         }
         if (specs$scaling[[q]][p] == "ord") {
           # extract corresponding dummy matrix
-          aux_dummy = dummies[[blocks[[q]][p]]]
+#          aux_dummy = dummies[[blocks[[q]][p]]]
+          which_dummy = (start_end$from[q]:start_end$to[q])[p]
+          aux_dummy = dummies[[which_dummy]]
           # apply scaling
           QQ[[q]][,p] = get_ord_scale(Z[,q], Xblocks[[q]][,p], aux_dummy)
           QQ[[q]][,p] = get_num_scale(QQ[[q]][,p])
