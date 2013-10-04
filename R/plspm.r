@@ -152,6 +152,7 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
     outer_weights = weights$w
     LV = weights$Y
     X = do.call(cbind, weights$QQ)  # quantified MVs
+    colnames(X) = gens$mvs_names
   }
   
   # =======================================================================
