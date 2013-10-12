@@ -99,13 +99,31 @@ print.summary.plspm <- function(x, ...)
     cat("----------------------------------------------------------", "\n")    
   }
   cat("OUTER MODEL","\n")
-  print(x$outer_model, print.gap = 2, digits = 3)
+  out_mod_mat = NULL
+  out_mod_labs = NULL
+  tmp = indexify(x$model$blocks)
+  for (i in 1:length(x$model$blocks)) {
+    out_mod_mat = rbind(out_mod_mat, rep(NA, 4), 
+                        as.matrix(x$outer_model[tmp==i,2:5]))
+    out_mod_labs = c(out_mod_labs, x$model$gens$lvs_names[i],
+          paste(" ", i, x$model$gens$mvs_names[tmp==i]))
+  }
+  rownames(out_mod_mat) = out_mod_labs
+  print(out_mod_mat, na.print="", print.gap = 2, digits = 3)
+#  print(x$outer_model, print.gap = 2, digits = 3)
   cat("\n")
   cat("----------------------------------------------------------", "\n")    
   if (length(x$model) > 5)
   {
     cat("CROSSLOADINGS","\n")
-    print(x$crossloadings, print.gap = 2, digits = 3)
+    cros = NULL
+    for (i in 1:length(x$model$blocks)) {
+      cros = rbind(cros, rep(NA, ncol(x$crossloadings[,-1])),
+                   as.matrix(x$crossloadings[tmp==i,-1]))
+    } 
+    rownames(cros) = out_mod_labs
+    print(cros, na.print="", print.gap=2, digits=3)
+#    print(x$crossloadings, print.gap = 2, digits = 3)
     cat("\n")
     cat("----------------------------------------------------------", "\n")    
   }

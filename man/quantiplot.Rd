@@ -8,9 +8,9 @@
 \arguments{
   \item{pls}{a non-metric \code{"plspm"} object}
 
-  \item{lv}{number of latent variable}
+  \item{lv}{number or name of latent variable}
 
-  \item{mv}{number of manifest variable}
+  \item{mv}{number or name of manifest variable}
 
   \item{pch}{Either an integer specifying a symbol or a
   single character to be used as the default in plotting
@@ -25,5 +25,9 @@
 }
 \description{
   Quantification Plots for Non-Metric PLS-PM
+}
+\details{
+  If both \code{lv} and \code{mv} are specified, only the
+  value of \code{lv} will be taken into account.
 }
 

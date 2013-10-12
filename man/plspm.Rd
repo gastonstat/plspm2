@@ -13,7 +13,7 @@
 
   \item{path_matrix}{A square (lower triangular) boolean
   matrix representing the inner model (i.e. the path
-  relationships betwenn latent variables).}
+  relationships between latent variables).}
 
   \item{blocks}{list of vectors with column indices or
   column names from \code{Data} indicating the sets of
@@ -37,7 +37,7 @@
 
   \item{scaled}{whether manifest variables should be
   standardized. Only used when \code{scaling = NULL}. When
-  (\code{TRUE} data is scaled to standardized values
+  (\code{TRUE}, data is scaled to standardized values
   (mean=0 and variance=1). The variance is calculated
   dividing by \code{N} instead of \code{N-1}).}
 
@@ -167,7 +167,7 @@ outerplot(satpls, what="loadings")
 outerplot(satpls, what="weights")
 }
 \author{
-  Gaston Sanchez, Giorgio Russolilo
+  Gaston Sanchez, Giorgio Russolillo
 }
 \references{
   Tenenhaus M., Esposito Vinzi V., Chatelin Y.M., and Lauro

@@ -14,7 +14,7 @@
 #'
 #' @param Data matrix or data frame containing the manifest variables.
 #' @param path_matrix A square (lower triangular) boolean matrix representing 
-#' the inner model (i.e. the path relationships betwenn latent variables).
+#' the inner model (i.e. the path relationships between latent variables).
 #' @param blocks list of vectors with column indices or column names
 #' from \code{Data} indicating the sets of manifest variables forming 
 #' each block (i.e. which manifest variables correspond to each block).
@@ -28,7 +28,7 @@
 #' scheme. Possible values are \code{"centroid"}, \code{"factorial"}, or
 #' \code{"path"}.
 #' @param scaled whether manifest variables should be standardized. 
-#' Only used when \code{scaling = NULL}. When (\code{TRUE} data is 
+#' Only used when \code{scaling = NULL}. When (\code{TRUE}, data is 
 #' scaled to standardized values (mean=0 and variance=1). 
 #' The variance is calculated dividing by \code{N} instead of \code{N-1}).
 #' @param tol decimal value indicating the tolerance criterion for the
@@ -71,7 +71,7 @@
 #' model. Only available when \code{dataset=TRUE}}
 #' @return \item{boot}{List of bootstrapping results; only available 
 #' when argument \code{boot.val=TRUE}}
-#' @author Gaston Sanchez, Giorgio Russolilo
+#' @author Gaston Sanchez, Giorgio Russolillo
 #'
 #' @references Tenenhaus M., Esposito Vinzi V., Chatelin Y.M., and Lauro C.
 #' (2005) PLS path modeling. \emph{Computational Statistics & Data Analysis},

@@ -15,9 +15,9 @@
 #' @param plscomp optional vector indicating the number of PLS components
 #' (for each block) to be used when handling non-metric data 
 #' (only used if \code{scaling} is provided)
-#' @param bootstrap logical indicating whether bootstrap validation is performed.
+#' @param bootstrap whether bootstrap validation is performed.
 #' @param br integer indicating the number bootstrap resamples.
-#' @param dataset logical indicating whether the data matrix should be retrieved.
+#' @param dataset whether the data matrix should be retrieved.
 #' @return list of validated arguments
 #' @keywords internal
 #' @template internals

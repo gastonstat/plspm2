@@ -37,14 +37,14 @@
   non-metric data (only used if \code{scaling} is
   provided)}
 
-  \item{bootstrap}{logical indicating whether bootstrap
-  validation is performed.}
+  \item{bootstrap}{whether bootstrap validation is
+  performed.}
 
   \item{br}{integer indicating the number bootstrap
   resamples.}
 
-  \item{dataset}{logical indicating whether the data matrix
-  should be retrieved.}
+  \item{dataset}{whether the data matrix should be
+  retrieved.}
 }
 \value{
   list of validated arguments
