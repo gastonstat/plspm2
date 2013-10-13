@@ -37,23 +37,26 @@ Typical example with a Customer Satisfaction Model
 # load dataset satisfaction
 data(satisfaction)
 
-# define inner model matrix
+# define path matrix (inner model)
 IMAG = c(0,0,0,0,0,0)
 EXPE = c(1,0,0,0,0,0)
 QUAL = c(0,1,0,0,0,0)
 VAL = c(0,1,1,0,0,0)
 SAT = c(1,1,1,1,0,0) 
 LOY = c(1,0,0,0,1,0)
-sat_inner = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
+sat_path = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
 
-# define outer model list
-sat_outer = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
+# define list of blocks (outer model)
+sat_blocks = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
 
 # vector of modes (reflective indicators)
 sat_mod = rep("A", 6) 
 
 # apply plspm with bootstrap validation
-satpls = plspm(satisfaction, sat_inner, sat_outer, sat_mod, scaled=FALSE, boot.val=TRUE)
+satpls = plspm(satisfaction, sat_path, sat_blocks, sat_mod, scaled=FALSE, boot.val=TRUE)
+
+# default print
+satpls
 
 # summary of results
 summary(satpls)
@@ -91,7 +94,7 @@ rus_scaling = list(c("NUM", "NUM", "NUM"),
 rus_modes = c("A", "A", "A")
 ```
 
-## Example 1
+### Example 1
 PLS-PM using data set `russa` and scaling all 'NUM'
 ```ruby
 # PLS-PM using data set 'russa'
@@ -114,7 +117,7 @@ plot(rus_pls1)
 ```
 
 
-## Example 2
+### Example 2
 PLS-PM using data set `russa`, and different scaling
 ```ruby
 # new scaling
@@ -130,7 +133,7 @@ rus_pls2 = plspm(russa, rus_path, rus_blocks, rus_scaling2, rus_modes,
 rus_pls2$outer_model
 ```
 
-## Example 3
+### Example 3
 Now let's use data set `russb` (it contains a factor!)
 ```ruby
 # take a peek
@@ -144,7 +147,7 @@ rus_pls3 = plspm(russb, rus_path, rus_blocks, rus_scaling2, rus_modes,
 rus_pls3$outer_model
 ```
 
-## Example 4
+### Example 4
 Now let's change modes
 ```ruby
 # modes new A
@@ -158,7 +161,7 @@ rus_pls4 = plspm(russa, rus_path, rus_blocks, rus_scaling2, rus_modes2,
 rus_pls4$outer_model
 ```
 
-## Example 5
+### Example 5
 Let's make things more interesting, flexible and versatile. How?
 What if you could have more freedom specifying the arguments? Now you can!
 Note that you can specify `blocks` using variables' names, the `scaling` types are NOT case senstive, neither are `modes` nor `scheme`. Isn't that cool?
