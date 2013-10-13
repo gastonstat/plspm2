@@ -186,7 +186,7 @@ function(Data, path_matrix, blocks, scaling = NULL, modes = NULL,
                            row.names = gens$mvs_names)
   
   # Unidimensionality
-  unidim = get_unidim(DM = MV, blocks = blocks, modes = modes)
+  unidim = get_unidim(DM = MV, blocks = blocks, modes = specs$modes)
   
   # Summary Inner model
   inner_summary = get_inner_summary(path_matrix, blocks, modes,
