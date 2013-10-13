@@ -1,6 +1,6 @@
-# Ciao bello
+# plspm
 
-GR (and LT): Ecco il prototipo del pacchetto (sotto il nome `plspm2`)! 
+**plspm** is an R package dedicated to Partial Least Squares Path Modeling (PLS-PM) analysis. Versions later than 4.0 include a whole new set of features to handle non-metric variables.
 
 ## Installation
 
@@ -30,14 +30,53 @@ library(plspm2)
 ```
 
 
-## Model for Russett data (original data set)
-Let's prepare the ingredients:
+## PLS-PM with Metric Data
+
+Typical example with a Customer Satisfaction Model
 ```ruby
-# load dataset russett 
+# load dataset satisfaction
+data(satisfaction)
+
+# define inner model matrix
+IMAG = c(0,0,0,0,0,0)
+EXPE = c(1,0,0,0,0,0)
+QUAL = c(0,1,0,0,0,0)
+VAL = c(0,1,1,0,0,0)
+SAT = c(1,1,1,1,0,0) 
+LOY = c(1,0,0,0,1,0)
+sat_inner = rbind(IMAG, EXPE, QUAL, VAL, SAT, LOY)
+
+# define outer model list
+sat_outer = list(1:5, 6:10, 11:15, 16:19, 20:23, 24:27)
+
+# vector of modes (reflective indicators)
+sat_mod = rep("A", 6) 
+
+# apply plspm with bootstrap validation
+satpls = plspm(satisfaction, sat_inner, sat_outer, sat_mod, scaled=FALSE, boot.val=TRUE)
+
+# summary of results
+summary(satpls)
+
+# plot inner model results
+plot(satpls, what="inner")
+
+# plot outer model loadings
+plot(satpls, what="loadings")
+
+# plot outer model weights
+plot(satpls, what="weights")
+```
+
+
+## PLS-PM with Non-Metric Data
+Example with the classic Russett data (original data set)
+```ruby
+# load dataset russett A
 # (variable 'demo' as numeric)
 data(russa)
 
-# load dataset russett
+# load dataset russett B
 # (variable 'demo' as factor)
 data(russb)
 
@@ -106,7 +145,6 @@ rus_pls3$outer_model
 ```
 
 ## Example 4
-Don't run this example yet! We need to define what is *mode newA*. 
 Now let's change modes
 ```ruby
 # modes new A
@@ -121,7 +159,7 @@ rus_pls4$outer_model
 ```
 
 ## Example 5
-Don't run this example either. Let's make things more interesting, flexible and versatile. How?
+Let's make things more interesting, flexible and versatile. How?
 What if you could have more freedom specifying the arguments? Now you can!
 Note that you can specify `blocks` using variables' names, the `scaling` types are NOT case senstive, neither are `modes` nor `scheme`. Isn't that cool?
 ```ruby
